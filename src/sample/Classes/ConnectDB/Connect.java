@@ -9,8 +9,7 @@ public class Connect {
         Connection con = null;
         try
         {
-            String url = "jdbc:sqlite:E:\\SQLITEDB\\Loan.db";
-
+            String url = "jdbc:sqlite:Loan.db";
             con = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
         }
@@ -18,7 +17,6 @@ public class Connect {
         catch (SQLException ex) {
             ex.printStackTrace();
         }
-
         finally
         {
             try {
