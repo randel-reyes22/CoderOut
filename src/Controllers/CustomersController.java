@@ -4,7 +4,6 @@ import WindowState.Close;
 import WindowState.Open;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -13,34 +12,25 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProductController implements Initializable {
+public class CustomersController implements Initializable {
 
-    @FXML
-    private TableColumn<?, ?> col_prod_id;
+    @FXML private TextField tbSearchCutomer;
 
-    @FXML
-    private TableColumn<?, ?> col_delete;
+    @FXML private TableView<?> CustomerTable;
 
-    @FXML
-    private TableView<?> PorductTable;
+    @FXML private TableColumn<?, ?> col_id;
 
-    @FXML
-    private TextField tbProdPrice;
+    @FXML private TableColumn<?, ?> col_firstname;
 
-    @FXML
-    private TableColumn<?, ?> col_update;
+    @FXML private TableColumn<?, ?> col_lastname;
 
-    @FXML
-    private Button btnSaveProduct;
+    @FXML private TableColumn<?, ?> col_mobile;
 
-    @FXML
-    private TableColumn<?, ?> col_prod_price;
+    @FXML private TableColumn<?, ?> col_address;
 
-    @FXML
-    private TextField tbProdName;
+    @FXML private TableColumn<?, ?> col_balance;
 
-    @FXML
-    private TableColumn<?, ?> col_prod_name;
+    @FXML private TableColumn<?, ?> Update;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,4 +42,5 @@ public class ProductController implements Initializable {
         Open.Dashboard();
         Close.ThisWindow(event);
     }
+
 }

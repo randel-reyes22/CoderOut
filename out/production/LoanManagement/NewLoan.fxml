@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="528.0" prefWidth="903.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NewLoanController">
+   <children>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/loan.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="56.0" layoutY="16.0" text="New Loan">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="846.0" layoutY="16.0" onMouseClicked="#GoBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/back.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="17.0" layoutY="89.0" prefHeight="259.0" prefWidth="428.0" spacing="20.0">
+         <children>
+            <TextField prefHeight="39.0" prefWidth="379.0" promptText="First name" />
+            <TextField prefHeight="39.0" prefWidth="294.0" promptText="Last name" />
+            <TextField prefHeight="39.0" prefWidth="294.0" promptText="Mobile number" />
+            <TextField prefHeight="39.0" prefWidth="294.0" promptText="Address" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <Label layoutX="23.0" layoutY="63.0" text="Customer details">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="475.0" layoutY="98.0" prefHeight="110.0" prefWidth="384.0" />
+      <Label layoutX="475.0" layoutY="63.0" text="Loaned products">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="475.0" layoutY="225.0" text="Add here">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

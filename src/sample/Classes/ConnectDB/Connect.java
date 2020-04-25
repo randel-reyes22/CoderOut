@@ -5,27 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connect {
-    public static void Link(){
-        Connection con = null;
+
+    public static Connection Link() {
+
+        // SQLite connection string
+        String url = "jdbc:sqlite:Loan.db";
+        Connection conn = null;
         try
         {
-            String url = "jdbc:sqlite:Loan.db";
-            con = DriverManager.getConnection(url);
-            System.out.println("Connection to SQLite has been established.");
+            conn = DriverManager.getConnection(url);
         }
-
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally
+        catch (SQLException e)
         {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+            System.out.println(e.getMessage());
         }
+        return conn;
+
     }
 }

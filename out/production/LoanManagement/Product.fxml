@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controllers.ProductController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="618.0" prefWidth="1114.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ProductController">
+   <children>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/product.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="30.0" layoutY="144.0" prefHeight="214.0" prefWidth="306.0" spacing="30.0">
+         <children>
+            <TextField fx:id="tbProdName" prefHeight="42.0" prefWidth="286.0" promptText="Product name" />
+            <TextField fx:id="tbProdPrice" prefHeight="43.0" prefWidth="286.0" promptText="Product price" />
+            <Button fx:id="btnSaveProduct" mnemonicParsing="false" prefHeight="43.0" prefWidth="286.0" text="Save" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <Label layoutX="47.0" layoutY="14.0" text="Products">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="377.0" layoutY="97.0" prefHeight="483.0" prefWidth="698.0">
+         <children>
+            <TableView fx:id="PorductTable" layoutY="1.0" prefHeight="483.0" prefWidth="698.0">
+              <columns>
+                <TableColumn fx:id="col_prod_id" prefWidth="89.0" text="SN" />
+                <TableColumn fx:id="col_prod_name" prefWidth="257.0" text="Product name" />
+                  <TableColumn fx:id="col_prod_price" prefWidth="154.0" text="Product price" />
+                  <TableColumn fx:id="col_update" prefWidth="105.0" text="Update" />
+                  <TableColumn fx:id="col_delete" prefWidth="92.0" text="Delete" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="30.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/add_product.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="70.0" layoutY="112.0" text="Add new product">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextField layoutX="876.0" layoutY="63.0" prefHeight="30.0" prefWidth="199.0" promptText="Search">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1076.0" layoutY="9.0" onMouseClicked="#GoBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/back.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>
