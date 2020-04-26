@@ -133,7 +133,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan {
 
     //ILoan methods implementation
     @Override
-    public void AddLoan(String modeOfPayment, String Term, String duedate) {
+    public boolean AddLoan(String modeOfPayment, String Term, String duedate) {
 
         String addLoan = "INSERT INTO main.Loan " +
                         "(CustomerFk, ProductFk, PaymentMode, Duedate, Term, Qty)" +
@@ -152,13 +152,15 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan {
             }
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Product has been added");
+            JOptionPane.showMessageDialog(null, "Loan has been saved");
+            return true;
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
             JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
                     JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 }

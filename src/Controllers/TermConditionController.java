@@ -1,5 +1,6 @@
 package Controllers;
 
+import WindowState.Close;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
@@ -37,6 +38,9 @@ public class TermConditionController extends CustomersController implements Init
 
     @FXML
     void btnSave(MouseEvent event) {
-        loan.AddLoan(tbModeOfPayment.getText(), tbTerm.getText(), DueDate.toString());
+        boolean stats = loan.AddLoan(tbModeOfPayment.getText(), tbTerm.getText(), DueDate.toString());
+        if(stats){
+            Close.ThisWindow(event);
+        }
     }
 }
