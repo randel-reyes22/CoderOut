@@ -2,6 +2,7 @@ package sample.Classes.Entities;
 
 public class Product {
 
+    private int prod_id;
     private String prodName;
     private Double prodPrice;
 

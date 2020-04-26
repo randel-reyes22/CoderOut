@@ -39,7 +39,11 @@ public class DashboardController implements Initializable {
 
     @FXML
     void OpenNewLoan(MouseEvent event) {
-        Open.NewLoan();
+        //change the state of the action classifier
+        LoanUtils.Action_classifier = "Select";
+
+        Open.Customers(); /*open customer window to select a customer to begin with a new loan
+                            then after selecting open the new loan window*/
         Close.ThisWindow(event);
     }
 
@@ -57,6 +61,8 @@ public class DashboardController implements Initializable {
 
     @FXML
     void OpenCustomers(MouseEvent event) {
+        //change the state of the action classifier
+        LoanUtils.Action_classifier = "Update";
         Open.Customers();
         Close.ThisWindow(event);
     }

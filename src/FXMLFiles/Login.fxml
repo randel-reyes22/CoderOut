@@ -41,7 +41,7 @@
       </VBox>
       <ImageView fitHeight="308.0" fitWidth="314.0" layoutX="32.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@icons/Bag.png" />
+            <Image url="@../icons/Bag.png" />
          </image></ImageView>
       <Label layoutX="202.0" layoutY="27.0" text="Product Loan Management">
          <font>

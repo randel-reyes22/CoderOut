@@ -11,7 +11,7 @@ public class Open {
 
 //  open dashboard window
     public static void Dashboard(){
-        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../Dashboard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Dashboard.fxml"));
         Parent dashboard = null;
 
         try {
@@ -26,26 +26,9 @@ public class Open {
         transactionWindow.show();
     }
 
-//  open customers window
-    public static void Customers(){
-        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../Customers.fxml"));
-        Parent customer = null;
-
-        try {
-            customer = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Stage transactionWindow = new Stage();
-        transactionWindow.setScene(new Scene(customer));
-        transactionWindow.setResizable(false);
-        transactionWindow.show();
-    }
-
-//  open new loan window
+//    open the new loan window
     public static void NewLoan(){
-        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../NewLoan.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/NewLoan.fxml"));
         Parent newLoan = null;
 
         try {
@@ -60,9 +43,43 @@ public class Open {
         transactionWindow.show();
     }
 
+//  open customers window
+    public static void Customers(){
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Customers.fxml"));
+        Parent customer = null;
+
+        try {
+            customer = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage transactionWindow = new Stage();
+        transactionWindow.setScene(new Scene(customer));
+        transactionWindow.setResizable(false);
+        transactionWindow.show();
+    }
+
+//  open add customer window
+    public static void AddCustomer(){
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/AddCustomer.fxml"));
+        Parent addCustomer = null;
+
+        try {
+            addCustomer = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage transactionWindow = new Stage();
+        transactionWindow.setScene(new Scene(addCustomer));
+        transactionWindow.setResizable(false);
+        transactionWindow.show();
+    }
+
 //  open payment window
     public static void Payment(){
-        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../Payment.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Payment.fxml"));
         Parent payment = null;
 
         try {
@@ -79,7 +96,7 @@ public class Open {
 
 //  open product window
     public static void Product(){
-        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../Product.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Product.fxml"));
         Parent product = null;
 
         try {
@@ -95,7 +112,7 @@ public class Open {
     }
 
     public static void Reports(){
-        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../Reports.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Reports.fxml"));
         Parent report = null;
 
         try {
@@ -111,7 +128,7 @@ public class Open {
     }
 
     public static void Login(){
-        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Login.fxml"));
         Parent login = null;
 
         try {
