@@ -7,12 +7,14 @@ import javafx.collections.transformation.SortedList;
 import sample.Classes.Entities.Account;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
+import sample.Classes.TableReceipt;
 
 import java.util.LinkedList;
 
 public class LoanUtils {
 
-    //sorted and filtered list
+    //Observable list
+    public static ObservableList<TableReceipt> ObTableReceipt = FXCollections.observableArrayList();
 
     //linked list
     public static LinkedList<Account> LLAccount = new LinkedList<>();

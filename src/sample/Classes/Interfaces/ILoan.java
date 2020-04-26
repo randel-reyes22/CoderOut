@@ -1,4 +1,5 @@
 package sample.Classes.Interfaces;
 
-public class ILoan {
+public interface ILoan {
+    void AddLoan(String modeOfPayment, String Term, String duedate);
 }

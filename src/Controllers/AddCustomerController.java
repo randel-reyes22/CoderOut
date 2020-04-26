@@ -76,7 +76,7 @@ public class AddCustomerController extends CustomersController implements Initia
             //after adding clear text fields
             Clear();
             //invoke parent method
-            super.ObCustomer.clear(); //clear the list of the OB
+            ObCustomer.clear(); //clear the list of the OB
             super.GetCustomerData(); //then update the list and table
             super.removeListCustomer(); //remove selection in filtered and sorted list
             Close.ThisWindow(event); //close this window after

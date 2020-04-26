@@ -78,15 +78,16 @@ public class CustomersController implements Initializable {
     }
 
     protected void GetCustomerData(){
+        ObCustomer.clear(); //clear the ob list
         try{
             Connection conn = Connect.Link();
             String sql = "SELECT * FROM main.Customer";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
             while (rs.next()){
-                ObCustomer.add(new Customer(Integer.parseInt(rs.getString("CustomerId")), rs.getString("Firstname"),
+                ObCustomer.add(new Customer(rs.getInt("CustomerId"), rs.getString("Firstname"),
                         rs.getString("Lastname"), rs.getString("MobileNumber"), rs.getString("Address")
-                            ,Double.parseDouble(rs.getString("Balance"))));
+                            ,rs.getDouble("Balance")));
             }
 
             CustomerTable.setItems(ObCustomer);
@@ -131,6 +132,7 @@ public class CustomersController implements Initializable {
                                 try {
                                     //open new loan to add loan
                                     Open.NewLoan();
+                                    //Close.ThisWindow();
                                 } catch(Exception e) {
                                     e.printStackTrace();
                                 }
