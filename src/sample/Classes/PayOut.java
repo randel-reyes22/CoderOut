@@ -1,8 +1,10 @@
 package sample.Classes;
 
+import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Interfaces.IPay;
 
 import javax.swing.*;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -17,7 +19,7 @@ public class PayOut extends Loan implements IPay {
         //deduct to the remaining balance of the customer
         String updateBalance = "UPDATE main.Customer SET Balance = Balance - ? " +
                                 "WHERE CustomerId = ?";
-
+        Connection conn = Connect.Link();
         try{
             //query 1
             PreparedStatement ps = conn.prepareStatement(collect);
@@ -40,6 +42,13 @@ public class PayOut extends Loan implements IPay {
             //if an exception occurs
             JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
                     JOptionPane.ERROR_MESSAGE);
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 }

@@ -22,9 +22,9 @@ public class RepaymentController implements Initializable {
 
     @FXML private TableColumn<Customer, Integer> col_id;
 
-    @FXML private TableColumn<Customer, ?> col_firstname;
+    @FXML private TableColumn<Customer, String> col_firstname;
 
-    @FXML private TableColumn<?, ?> col_lastname;
+    @FXML private TableColumn<Customer, String> col_lastname;
 
     @FXML private TableColumn<Customer, Double> col_balance;
 

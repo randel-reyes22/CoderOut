@@ -45,8 +45,10 @@ public class TermConditionController extends NewLoanController implements Initia
     void btnSave(MouseEvent event) {
 
         if(!CheckEmptyFields() && !String.valueOf(DueDate.getValue()).isEmpty()) {
-            boolean stats = loan.AddLoan(Total ,tbModeOfPayment.getText(), tbTerm.getText(), String.valueOf(DueDate.getValue()));
-            if (stats) {
+            //stat means if loan is successfully added
+            boolean stat = loan.AddLoan(Total ,tbModeOfPayment.getText(), tbTerm.getText(), String.valueOf(DueDate.getValue()));
+            if (stat) {
+                LoanUtils.ObTableReceipt.clear(); //clear the table receipt
                 Close.ThisWindow(event);
             }
         }

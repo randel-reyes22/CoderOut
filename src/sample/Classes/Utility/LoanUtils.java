@@ -2,12 +2,12 @@ package sample.Classes.Utility;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import sample.Classes.Entities.Account;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
-import sample.Classes.TableReceipt;
+import sample.Classes.TableClasses.HistoryPayment;
+import sample.Classes.TableClasses.LoanedProducts;
+import sample.Classes.TableClasses.TableReceipt;
 
 import java.util.LinkedList;
 
@@ -17,6 +17,8 @@ public class LoanUtils {
     public static ObservableList<TableReceipt> ObTableReceipt = FXCollections.observableArrayList();
     public static ObservableList<Product> ObProduct = FXCollections.observableArrayList();
     public static ObservableList<Customer> ObCustomer = FXCollections.observableArrayList();
+    public static ObservableList<HistoryPayment> ObHistoryPayments = FXCollections.observableArrayList();
+    public static ObservableList<LoanedProducts> ObLoanedProducts = FXCollections.observableArrayList();
 
     //linked list for updating and adding
     public static LinkedList<Account> LLAccount = new LinkedList<>();

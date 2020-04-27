@@ -16,7 +16,7 @@ import javafx.util.Callback;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
 import sample.Classes.Loan;
-import sample.Classes.TableReceipt;
+import sample.Classes.TableClasses.TableReceipt;
 import sample.Classes.Utility.LoanUtils;
 
 import java.net.URL;

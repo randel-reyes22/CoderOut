@@ -1,4 +1,4 @@
-package sample.Classes;
+package sample.Classes.TableClasses;
 
 public class TableReceipt {
 

@@ -7,6 +7,9 @@ import sample.Classes.Interfaces.IAccount;
 import sample.Classes.Interfaces.ILoan;
 import sample.Classes.Interfaces.IProduct;
 import sample.Classes.Interfaces.IWallet;
+import sample.Classes.TableClasses.HistoryPayment;
+import sample.Classes.TableClasses.LoanedProducts;
+import sample.Classes.TableClasses.TableReceipt;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
 
@@ -17,9 +20,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWallet {
-
-    //connection string
-    protected Connection conn = Connect.Link();
 
     //IAccount methods implementation
     @Override
@@ -34,6 +34,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
 
         String insertCustomer = "INSERT INTO main.Customer (Firstname, Lastname, MobileNumber, Address)" +
                                 "VALUES (?, ?, ?, ?)";
+        Connection conn = Connect.Link();
         try{
             PreparedStatement ps = conn.prepareStatement(insertCustomer);
             ps.setString(1, customer.getFirstname());
@@ -61,6 +62,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         String updateCustomer = "UPDATE main.Customer " +
                 "SET Firstname = ?, Lastname = ?, MobileNumber = ?, Address = ?" +
                 "WHERE CustomerId = ?";
+        Connection conn = Connect.Link();
         try{
             PreparedStatement ps = conn.prepareStatement(updateCustomer);
             ps.setString(1, customer.getFirstname());
@@ -84,6 +86,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
     @Override
     public void GetCustomers() {
         ObCustomer.clear(); //clear the ob list
+        Connection conn = Connect.Link();
         try{
             String sql = "SELECT * FROM main.Customer";
             ResultSet rs = conn.createStatement().executeQuery(sql);
@@ -97,6 +100,13 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     //IProduct methods implementation
@@ -105,6 +115,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         /* get the first most added customer in the linked list */
         Product product = LLProduct.getFirst();
 
+        Connection conn = Connect.Link();
         String insertCustomer = "INSERT INTO main.Product (ProdName, ProdPrice, ProdUnit)" +
                                 "VALUES (?, ?, ?)";
         try{
@@ -123,6 +134,13 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -130,6 +148,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         /* get the first most added customer in the linked list */
         Product product = LLProduct.getFirst();
 
+        Connection conn = Connect.Link();
         String updateProduct = "UPDATE main.Product " +
                                 "SET ProdName = ?, ProdPrice = ?, ProdUnit = ? " +
                                 "WHERE ProductId = ?";
@@ -150,11 +169,19 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void GetProducts() {
         LoanUtils.ObProduct.clear(); //clear the ob list
+        Connection conn = Connect.Link();
         try{
             String sql = "SELECT * FROM main.Product";
             ResultSet rs = conn.createStatement().executeQuery(sql);
@@ -168,6 +195,13 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     //ILoan methods implementation
@@ -179,7 +213,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
                         "VALUES (?, ?, ?, ?, ?, ?)";
 
         String addBalance = "UPDATE main.Customer SET Balance = Balance + ? WHERE CustomerId = ?;";
-
+        Connection conn = Connect.Link();
         try{
             PreparedStatement ps = conn.prepareStatement(addLoan);
 
@@ -212,13 +246,79 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         }
     }
 
+    @Override
+    public void GetPaymentHistory() {
+        LoanUtils.ObHistoryPayments.clear(); //clear the ob list
+        Connection conn = Connect.Link();
+        try{
+            String sql = "SELECT CollectionId, CollectionAmount, GivenDate " +
+                        "FROM main.Collections WHERE CustomerFk = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, getCustomer_PK());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                LoanUtils.ObHistoryPayments.add(new HistoryPayment(rs.getInt("CollectionId"),
+                        rs.getDouble("CollectionAmount"),rs.getString("GivenDate")));
+            }
+
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void GetProductsLoaned() {
+        LoanUtils.ObLoanedProducts.clear(); //clear the ob list
+        Connection conn = Connect.Link();
+        try{
+            String sql = "SELECT [p].ProdName, [p].ProdPrice, [l].Qty, [l].PaymentMode, [l].Duedate, [l].Term " +
+            "FROM Product AS p INNER JOIN Loan L on p.ProductId = L.ProductFk " +
+            "WHERE CustomerFk = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, getCustomer_PK());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                LoanUtils.ObLoanedProducts.add(new LoanedProducts(rs.getString("ProdName"), rs.getDouble("ProdPrice"),
+                                            rs.getInt("Qty"), rs.getString("PaymentMode"),
+                                            rs.getString("Duedate"), rs.getString("Term")));
+            }
+
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
     //IWallet methods implementation
     @Override
     public double TotalRevenueToday() {
 
         String revenueToday = "SELECT sum(CollectionAmount) FROM main.Collections where GivenDate = ?";
+        Connection conn = Connect.Link();
         try{
-            /*conn.*/
             PreparedStatement ps =  conn.prepareStatement(revenueToday);
             ps.setString(1, WeekDates.DateNow());
             ResultSet result = ps.executeQuery();
@@ -233,6 +333,13 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
                     JOptionPane.ERROR_MESSAGE);
             return 0.00;
         }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -240,6 +347,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
 
         String revenueToday = "SELECT sum(CollectionAmount) FROM main.Collections " +
                                 "WHERE GivenDate BETWEEN ? AND ?";
+        Connection conn = Connect.Link();
         try{
             PreparedStatement ps =  conn.prepareStatement(revenueToday);
             ps.setString(1, WeekDates.getMonday());
@@ -255,6 +363,13 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
                     JOptionPane.ERROR_MESSAGE);
             return 0.00;
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 }
