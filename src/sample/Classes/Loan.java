@@ -8,6 +8,7 @@ import sample.Classes.Interfaces.ILoan;
 import sample.Classes.Interfaces.IProduct;
 import sample.Classes.Interfaces.IWallet;
 import sample.Classes.Utility.LoanUtils;
+import sample.Classes.Utility.WeekDates;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -213,12 +214,47 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
 
     //IWallet methods implementation
     @Override
-    public void TotalRevenueToday() {
+    public double TotalRevenueToday() {
 
+        String revenueToday = "SELECT sum(CollectionAmount) FROM main.Collections where GivenDate = ?";
+        try{
+            /*conn.*/
+            PreparedStatement ps =  conn.prepareStatement(revenueToday);
+            ps.setString(1, WeekDates.DateNow());
+            ResultSet result = ps.executeQuery();
+            result.next();
+
+            return result.getDouble(1);
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            //if an exception occurs
+            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return 0.00;
+        }
     }
 
     @Override
-    public void TotalRevenueThisWeek() {
+    public double TotalRevenueThisWeek() {
 
+        String revenueToday = "SELECT sum(CollectionAmount) FROM main.Collections " +
+                                "WHERE GivenDate BETWEEN ? AND ?";
+        try{
+            PreparedStatement ps =  conn.prepareStatement(revenueToday);
+            ps.setString(1, WeekDates.getMonday());
+            ps.setString(2, WeekDates.getSunday());
+            ResultSet result = ps.executeQuery();
+            result.next();
+
+            return result.getDouble(1);
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            //if an exception occurs
+            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return 0.00;
+        }
     }
 }

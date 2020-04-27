@@ -1,12 +1,9 @@
 package Controllers;
 
-import WindowState.Close;
-import WindowState.Open;
-import javafx.event.ActionEvent;
+import sample.WindowState.Close;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;

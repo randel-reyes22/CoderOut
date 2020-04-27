@@ -1,7 +1,7 @@
 package Controllers;
 
-import WindowState.Close;
-import WindowState.Open;
+import sample.WindowState.Close;
+import sample.WindowState.Open;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
 import sample.Classes.Loan;
@@ -21,9 +20,6 @@ import sample.Classes.TableReceipt;
 import sample.Classes.Utility.LoanUtils;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class NewLoanController extends CustomersController implements Initializable {

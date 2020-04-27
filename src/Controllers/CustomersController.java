@@ -1,34 +1,22 @@
 package Controllers;
 
-import WindowState.Close;
-import WindowState.Open;
-import com.sun.xml.internal.ws.wsdl.writer.document.http.Address;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import sample.WindowState.Close;
+import sample.WindowState.Open;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import javafx.util.Callback;
-import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 
-import javax.lang.model.element.NestingKind;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {

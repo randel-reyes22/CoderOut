@@ -2,7 +2,7 @@ package sample.Classes.Interfaces;
 
 public interface IWallet {
     //today's revenue
-    void TotalRevenueToday();
+    double TotalRevenueToday();
     //this week revenue
-    void TotalRevenueThisWeek();
+    double TotalRevenueThisWeek();
 }

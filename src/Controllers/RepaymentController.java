@@ -1,7 +1,7 @@
 package Controllers;
 
-import WindowState.Close;
-import WindowState.Open;
+import sample.WindowState.Close;
+import sample.WindowState.Open;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import sample.Classes.Entities.Customer;
-import sample.Classes.Entities.Product;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 

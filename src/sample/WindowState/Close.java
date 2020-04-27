@@ -1,4 +1,4 @@
-package WindowState;
+package sample.WindowState;
 
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
