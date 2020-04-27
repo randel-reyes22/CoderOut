@@ -2,8 +2,6 @@ package Controllers;
 
 import WindowState.Close;
 import WindowState.Open;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -14,11 +12,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import sample.Classes.ConnectDB.Connect;
-import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 
+import javax.swing.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -54,12 +52,11 @@ public class ProductController implements Initializable {
 
     @FXML private Label lbCaption;
 
-    private Loan loan = new Loan();
+    private final Loan loan = new Loan();
     private static String action = "Add";
-    private LinkedList<TextField> textFields = new LinkedList<>();
+    private final LinkedList<TextField> textFields = new LinkedList<>();
 
-    protected static ObservableList<Product> ObProduct = FXCollections.observableArrayList();
-    protected FilteredList<Product> filteredListProduct = new FilteredList<>(ObProduct, p -> true);
+    protected FilteredList<Product> filteredListProduct = new FilteredList<>(LoanUtils.ObProduct, p -> true);
     protected SortedList<Product> sortedListProduct = new SortedList<>(filteredListProduct);
 
     @Override
@@ -77,23 +74,10 @@ public class ProductController implements Initializable {
     }
 
     protected void GetProductData(){
-        ObProduct.clear(); //clear the ob list
-        try{
-            Connection conn = Connect.Link();
-            String sql = "SELECT * FROM main.Product";
-            ResultSet rs = conn.createStatement().executeQuery(sql);
-
-            while (rs.next()){
-                ObProduct.add(new Product(rs.getInt("ProductId"), rs.getString("ProdName"),
-                        rs.getDouble("ProdPrice"), rs.getString("ProdUnit")));
-            }
-
-            ProductTable.setItems(ObProduct);
-            ActionButton(); //button
-        }
-        catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        //load the products to the observable list
+        loan.GetProducts();
+        ProductTable.setItems(LoanUtils.ObProduct);
+        ActionButton(); //button
     }
 
     private void ActionButton(){
@@ -151,10 +135,10 @@ public class ProductController implements Initializable {
             }
 
             Clear(); //clear the text fields
-            ObProduct.clear(); //clear the ob product
+            LoanUtils.ObProduct.clear(); //clear the ob product
             GetProductData(); //load it again
             removeListProduct(); //remove selected items
-            searchProduct(); //product searchs
+            searchProduct(); //product search
         }
     }
 
@@ -179,11 +163,7 @@ public class ProductController implements Initializable {
                     return true;
                 } else if (product.getProdPrice().toString().contains(lowerCaseFilter)) {
                     return true;
-                }else if(product.getProdUnit().toLowerCase().contains(lowerCaseFilter)){
-                    return true;
-                }
-
-                return false;
+                }else return product.getProdUnit().toLowerCase().contains(lowerCaseFilter);
             });
         });
 
@@ -197,8 +177,10 @@ public class ProductController implements Initializable {
         textFields.add(tbProdUnit);
 
         for(TextField t: textFields){
-            if(t.getText().isEmpty())
+            if(t.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Supply all fields");
                 return true;
+            }
         }
 
         return false;
@@ -214,7 +196,7 @@ public class ProductController implements Initializable {
         btnSaveProduct.setText("Update");
         lbCaption.setText("Update product");
         //get the details using the product PK
-        for(Product product: ObProduct){
+        for(Product product: LoanUtils.ObProduct){
             if(product.getProd_id() == LoanUtils.getProduct_PK()){
                 tbProdName.setText(product.getProdName());
                 tbProdPrice.setText(String.valueOf(product.getProdPrice()));
@@ -226,7 +208,9 @@ public class ProductController implements Initializable {
 
     @FXML
     void GoBack(MouseEvent event) {
-        Open.Dashboard();
+        if (!LoanUtils.Loan_to_product_detect.equals("Active")) {
+            Open.Dashboard();
+        }
         Close.ThisWindow(event);
     }
 }

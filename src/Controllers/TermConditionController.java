@@ -10,10 +10,12 @@ import sample.Classes.Entities.Customer;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 
+import javax.swing.*;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class TermConditionController extends CustomersController implements Initializable {
+public class TermConditionController extends NewLoanController implements Initializable {
 
     @FXML private TextField tbCustomerName;
 
@@ -23,12 +25,15 @@ public class TermConditionController extends CustomersController implements Init
 
     @FXML private DatePicker DueDate;
 
-    private Loan loan = new Loan();
+    //classes
+    private final Loan loan = new Loan();
+    private final double Total = totalAmount;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Term " + Total);
         //display the name of the customer
-        for(Customer customer: ObCustomer){
+        for(Customer customer: LoanUtils.ObCustomer){
             if(customer.getCustomer_id() == LoanUtils.getCustomer_PK()){
                 tbCustomerName.setText(customer.getFirstname() + " " + customer.getLastname());
                 return;
@@ -38,9 +43,27 @@ public class TermConditionController extends CustomersController implements Init
 
     @FXML
     void btnSave(MouseEvent event) {
-        boolean stats = loan.AddLoan(tbModeOfPayment.getText(), tbTerm.getText(), DueDate.toString());
-        if(stats){
-            Close.ThisWindow(event);
+
+        if(!CheckEmptyFields() && !String.valueOf(DueDate.getValue()).isEmpty()) {
+            boolean stats = loan.AddLoan(Total ,tbModeOfPayment.getText(), tbTerm.getText(), String.valueOf(DueDate.getValue()));
+            if (stats) {
+                Close.ThisWindow(event);
+            }
         }
+    }
+
+    private boolean CheckEmptyFields(){
+        LinkedList<TextField> textFields = new LinkedList<>();
+        textFields.add(tbCustomerName);
+        textFields.add(tbModeOfPayment);
+        textFields.add(tbTerm);
+
+        for(TextField t: textFields){
+            if(t.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Supply all fields");
+                return true;
+            }
+        }
+        return false;
     }
 }

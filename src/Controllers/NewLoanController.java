@@ -64,12 +64,13 @@ public class NewLoanController extends CustomersController implements Initializa
     @FXML private Label lbTotalAmount;
 
     //Utilities
-    private Double product_price = 0.00;
-    private ObservableList<TableReceipt> tableReceipts = FXCollections.observableArrayList();
-    private Loan loan = new Loan();
+    private double product_price = 0.00; //price of the current selected product
+    protected static double totalAmount = 0.00; //product the total amount gathered in the receipt table
+    private final ObservableList<TableReceipt> tableReceipts = FXCollections.observableArrayList();
+    private final Loan loan = new Loan();
 
-    protected static ObservableList<Product> ObProduct = FXCollections.observableArrayList();
-    protected FilteredList<Product> filteredListProduct = new FilteredList<>(ObProduct, p -> true);
+    //Collections
+    protected FilteredList<Product> filteredListProduct = new FilteredList<>(LoanUtils.ObProduct, p -> true);
     protected SortedList<Product> sortedListProduct = new SortedList<>(filteredListProduct);
 
     @Override
@@ -78,12 +79,13 @@ public class NewLoanController extends CustomersController implements Initializa
         InitSpinner();
         InitSelectColumns();
         GetSelectionProduct();
+        searchProductChoose();
 
         //table receipt
         InitReceiptColumns();
 
         //display the customer name
-        for(Customer customer: ObCustomer){
+        for(Customer customer: LoanUtils.ObCustomer){
             if(customer.getCustomer_id() == LoanUtils.getCustomer_PK()){
                 lbCustomerName.setText(customer.getFirstname() + " " + customer.getLastname());
                 return;
@@ -116,18 +118,13 @@ public class NewLoanController extends CustomersController implements Initializa
         for(TableReceipt tr: LoanUtils.ObTableReceipt){
             total += tr.getTotal();
         }
+        totalAmount = total;
+        System.out.println("Total amount " + totalAmount);
         return total;
     }
 
     private void ResetTextFields(){
         tbProductname.clear();
-    }
-
-    //save all added loaned products to the customer assigned
-    //and hit the next window Terms Win
-    @FXML
-    void btnNext(ActionEvent event) {
-        Open.TermCondition();
     }
 
     private void InitSpinner(){
@@ -141,6 +138,7 @@ public class NewLoanController extends CustomersController implements Initializa
         prodQty.setValueFactory(valueFactory);
     }
 
+    //for table receipt table
     private void InitReceiptColumns(){
         col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_name.setCellValueFactory(new PropertyValueFactory<>("prod_name"));
@@ -157,22 +155,11 @@ public class NewLoanController extends CustomersController implements Initializa
 
     //for selection of product
     protected void GetSelectionProduct() {
-        ObProduct.clear(); //clear the ob list
-        try {
-            Connection conn = Connect.Link();
-            String sql = "SELECT ProductId, ProdName, ProdPrice FROM main.Product";
-            ResultSet rs = conn.createStatement().executeQuery(sql);
-
-            while (rs.next()) {
-                ObProduct.add(new Product(rs.getInt("ProductId"), rs.getString("ProdName")
-                        ,rs.getDouble("ProdPrice")));
-            }
-
-            ProductChooseTable.setItems(ObProduct);
-            SelectButton(); //button
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        //load the products to the observable list
+        loan.GetProducts();
+        //invoke the observable list of the Product
+        ProductChooseTable.setItems(LoanUtils.ObProduct);
+        SelectButton(); //button
     }
 
     //for selection of product
@@ -255,7 +242,7 @@ public class NewLoanController extends CustomersController implements Initializa
     //for viewing the selected product
     private void LoadProductSelected(){
         //get the details using the product PK
-        for(Product product: ObProduct){
+        for(Product product: LoanUtils.ObProduct){
             if(product.getProd_id() == LoanUtils.getProduct_PK()){
                 tbProductname.setText(product.getProdName());
                 return;
@@ -263,7 +250,43 @@ public class NewLoanController extends CustomersController implements Initializa
         }
     }
 
+    @FXML
+    void AddNewProduct(MouseEvent event) {
+       /* change the state of
+        this classifier to Active*/
+        LoanUtils.Loan_to_product_detect = "Active";
+        //invoke product window
+        Open.Product();
+        //load again the table
+        //refresh the observable list
+        GetSelectionProduct();
+    }
 
+    //search product to select
+    protected void searchProductChoose() {
+
+        tbSearchProduct.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredListProduct.setPredicate(product -> {
+                if ((newValue == null || newValue.isEmpty())) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                return product.getProdName().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        sortedListProduct.comparatorProperty().bind(ProductChooseTable.comparatorProperty());
+        ProductChooseTable.setItems(sortedListProduct);
+    }
+
+    //save all added loaned products to the customer assigned
+    //and hit the next window Terms Win
+    @FXML
+    void btnNext(ActionEvent event) {
+        Open.TermCondition();
+    }
 
     @FXML
     void GoBack(MouseEvent event) {

@@ -72,7 +72,7 @@ public class Open {
 //  open payment window
     public static void Payment(){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Payment.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Repayment.fxml"));
             Parent payment = fxmlLoader.load();
             Stage window = new Stage();
             window.setScene(new Scene(payment));
@@ -84,7 +84,7 @@ public class Open {
         }
     }
 
-//  open product window
+    // open product window
     public static void Product(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Product.fxml"));
@@ -99,6 +99,7 @@ public class Open {
         }
     }
 
+    //  open reports window
     public static void Reports(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Reports.fxml"));
@@ -113,6 +114,7 @@ public class Open {
         }
     }
 
+    // open login window
     public static void Login(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/Login.fxml"));
@@ -127,12 +129,58 @@ public class Open {
         }
     }
 
+    //open term condition window
     public static void TermCondition(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/TermCondition.fxml"));
             Parent term_condition = fxmlLoader.load();
             Stage window = new Stage();
             window.setScene(new Scene(term_condition));
+            window.setResizable(false);
+            window.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //open MakePayment window
+    public static void MakePayment(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/MakePayment.fxml"));
+            Parent makePayment = fxmlLoader.load();
+            Stage window = new Stage();
+            window.setScene(new Scene(makePayment));
+            window.setResizable(false);
+            window.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //open PaymentHistory window
+    public static void PaymentHistory(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/PaymentHistory.fxml"));
+            Parent paymentHistory = fxmlLoader.load();
+            Stage window = new Stage();
+            window.setScene(new Scene(paymentHistory));
+            window.setResizable(false);
+            window.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //open ViewLoanedProducts window
+    public static void LoanedProducts(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../FXMLFiles/ViewLoanedProducts.fxml"));
+            Parent loanedProducts = fxmlLoader.load();
+            Stage window = new Stage();
+            window.setScene(new Scene(loanedProducts));
             window.setResizable(false);
             window.show();
         }

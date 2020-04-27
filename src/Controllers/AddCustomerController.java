@@ -14,6 +14,7 @@ import sample.Classes.Entities.Customer;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -33,8 +34,8 @@ public class AddCustomerController extends CustomersController implements Initia
     @FXML private Label lbTItle;
 
     //
-    private LinkedList<TextField> textFields = new LinkedList<>();
-    private Loan loan = new Loan();
+    private final LinkedList<TextField> textFields = new LinkedList<>();
+    private final Loan loan = new Loan();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,7 +44,7 @@ public class AddCustomerController extends CustomersController implements Initia
             lbTItle.setText("Update Customer");
             btnSave.setText("Update");
 
-            for(Customer c: ObCustomer){
+            for(Customer c: LoanUtils.ObCustomer){
                 if(c.getCustomer_id() == LoanUtils.getCustomer_PK()){
                     tbFirstname.setText(c.getFirstname());
                     tbLastname.setText(c.getLastname());
@@ -70,13 +71,15 @@ public class AddCustomerController extends CustomersController implements Initia
                     break;
                 case "Add":
                     loan.AddCustomerAccount();
+                    //change back to update after add
+                    LoanUtils.Action_classifier = "Update";
                     break;
             }
 
             //after adding clear text fields
             Clear();
             //invoke parent method
-            ObCustomer.clear(); //clear the list of the OB
+            LoanUtils.ObCustomer.clear(); //clear the list of the OB
             super.GetCustomerData(); //then update the list and table
             super.removeListCustomer(); //remove selection in filtered and sorted list
             Close.ThisWindow(event); //close this window after
@@ -91,6 +94,7 @@ public class AddCustomerController extends CustomersController implements Initia
 
         for (TextField t : textFields){
             if(t.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Supply all fields");
                 return true;
             }
         }
@@ -106,6 +110,8 @@ public class AddCustomerController extends CustomersController implements Initia
 
     @FXML
     void GoBack(MouseEvent event) {
+        //change back to update before exit
+        LoanUtils.Action_classifier = "Update";
         Close.ThisWindow(event);
     }
 }

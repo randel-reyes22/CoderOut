@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -53,8 +54,8 @@ public class CustomersController implements Initializable {
     @FXML private TableColumn<Customer, Void> col_update;
 
     //for
-    protected static ObservableList<Customer> ObCustomer = FXCollections.observableArrayList();
-    protected FilteredList<Customer> filteredListCustomer = new FilteredList<>(ObCustomer, p -> true);
+    private final Loan loan = new Loan();
+    protected FilteredList<Customer> filteredListCustomer = new FilteredList<>(LoanUtils.ObCustomer, p -> true);
     protected SortedList<Customer> sortedListCustomer = new SortedList<>(filteredListCustomer);
 
     @Override
@@ -68,7 +69,7 @@ public class CustomersController implements Initializable {
         searchCustomer();
     }
 
-    private void InitColumns(){
+    protected void InitColumns(){
         col_id.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         col_firstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         col_lastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
@@ -78,24 +79,10 @@ public class CustomersController implements Initializable {
     }
 
     protected void GetCustomerData(){
-        ObCustomer.clear(); //clear the ob list
-        try{
-            Connection conn = Connect.Link();
-            String sql = "SELECT * FROM main.Customer";
-            ResultSet rs = conn.createStatement().executeQuery(sql);
-
-            while (rs.next()){
-                ObCustomer.add(new Customer(rs.getInt("CustomerId"), rs.getString("Firstname"),
-                        rs.getString("Lastname"), rs.getString("MobileNumber"), rs.getString("Address")
-                            ,rs.getDouble("Balance")));
-            }
-
-            CustomerTable.setItems(ObCustomer);
-            ActionButton(); //button
-        }
-        catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        //load the customers in the observable list
+        loan.GetCustomers();
+        CustomerTable.setItems(LoanUtils.ObCustomer);
+        ActionButton(); //button
     }
 
     private void ActionButton(){
@@ -130,9 +117,10 @@ public class CustomersController implements Initializable {
                                 break;
                             case "Select":
                                 try {
-                                    //open new loan to add loan
+                                    //open new loan window to add loan
                                     Open.NewLoan();
-                                    //Close.ThisWindow();
+                                    //hide this window
+                                    ((Node)(event.getSource())).getScene().getWindow().hide();
                                 } catch(Exception e) {
                                     e.printStackTrace();
                                 }
@@ -182,17 +170,14 @@ public class CustomersController implements Initializable {
                     return true;
                 }else if(customer.getAddress().toLowerCase().contains(lowerCaseFilter)){
                     return true;
-                }else if(String.valueOf(customer.getBalance()).contains(lowerCaseFilter)){
-                    return true;
-                }
-
-                return false;
+                }else return String.valueOf(customer.getBalance()).contains(lowerCaseFilter);
             });
         });
 
         sortedListCustomer.comparatorProperty().bind(CustomerTable.comparatorProperty());
         CustomerTable.setItems(sortedListCustomer);
     }
+
     @FXML
     void OpenAddCustomer(MouseEvent event) {
         LoanUtils.Action_classifier = "Add";

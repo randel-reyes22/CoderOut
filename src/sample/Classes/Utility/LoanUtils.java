@@ -13,10 +13,12 @@ import java.util.LinkedList;
 
 public class LoanUtils {
 
-    //Observable list
+    //Observable list for the table and displaying
     public static ObservableList<TableReceipt> ObTableReceipt = FXCollections.observableArrayList();
+    public static ObservableList<Product> ObProduct = FXCollections.observableArrayList();
+    public static ObservableList<Customer> ObCustomer = FXCollections.observableArrayList();
 
-    //linked list
+    //linked list for updating and adding
     public static LinkedList<Account> LLAccount = new LinkedList<>();
     public static LinkedList<Customer> LLCustomer = new LinkedList<>();
     public static LinkedList<Product> LLProduct = new LinkedList<>();
@@ -45,8 +47,11 @@ public class LoanUtils {
         Product_PK = product_PK;
     }
 
-    //Action classifier
     /*this is for classifying if customer
     will be selected or to be updated*/
     public static String Action_classifier;
+
+    //detect if new loan to add product window is open
+    public static String Loan_to_product_detect = "NOTACTIVE";
+
 }

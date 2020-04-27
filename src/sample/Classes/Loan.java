@@ -6,14 +6,16 @@ import sample.Classes.Entities.Product;
 import sample.Classes.Interfaces.IAccount;
 import sample.Classes.Interfaces.ILoan;
 import sample.Classes.Interfaces.IProduct;
+import sample.Classes.Interfaces.IWallet;
 import sample.Classes.Utility.LoanUtils;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Loan extends LoanUtils implements IAccount, IProduct, ILoan {
+public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWallet {
 
     //connection string
     protected Connection conn = Connect.Link();
@@ -78,6 +80,24 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan {
         }
     }
 
+    @Override
+    public void GetCustomers() {
+        ObCustomer.clear(); //clear the ob list
+        try{
+            String sql = "SELECT * FROM main.Customer";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                ObCustomer.add(new Customer(rs.getInt("CustomerId"), rs.getString("Firstname"),
+                        rs.getString("Lastname"), rs.getString("MobileNumber"), rs.getString("Address")
+                        ,rs.getDouble("Balance")));
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     //IProduct methods implementation
     @Override
     public void AddProduct() {
@@ -131,13 +151,34 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan {
         }
     }
 
+    @Override
+    public void GetProducts() {
+        LoanUtils.ObProduct.clear(); //clear the ob list
+        try{
+            String sql = "SELECT * FROM main.Product";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            while (rs.next()){
+                LoanUtils.ObProduct.add(new Product(rs.getInt("ProductId"), rs.getString("ProdName"),
+                        rs.getDouble("ProdPrice"), rs.getString("ProdUnit")));
+            }
+
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     //ILoan methods implementation
     @Override
-    public boolean AddLoan(String modeOfPayment, String Term, String duedate) {
+    public boolean AddLoan(double total, String modeOfPayment, String Term, String duedate) {
 
         String addLoan = "INSERT INTO main.Loan " +
                         "(CustomerFk, ProductFk, PaymentMode, Duedate, Term, Qty)" +
                         "VALUES (?, ?, ?, ?, ?, ?)";
+
+        String addBalance = "UPDATE main.Customer SET Balance = Balance + ? WHERE CustomerId = ?;";
+
         try{
             PreparedStatement ps = conn.prepareStatement(addLoan);
 
@@ -151,6 +192,12 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan {
                 ps.executeUpdate();
             }
 
+            //add the total in the customer remaining balance
+            PreparedStatement ps2 = conn.prepareStatement(addBalance);
+            ps2.setDouble(1, total);
+            ps2.setInt(2, getCustomer_PK());
+            ps2.executeUpdate();
+
             //if customer is successfully added
             JOptionPane.showMessageDialog(null, "Loan has been saved");
             return true;
@@ -162,5 +209,16 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
+
+    //IWallet methods implementation
+    @Override
+    public void TotalRevenueToday() {
+
+    }
+
+    @Override
+    public void TotalRevenueThisWeek() {
+
     }
 }

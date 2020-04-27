@@ -14,5 +14,4 @@ public class Close {
             ((Stage) window).close();
         }
     }
-
 }

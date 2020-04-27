@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Loan.db" uuid="5d62dd08-2ab6-4824-8c36-a054ac6811ed">
+    <data-source source="LOCAL" name="Loan.db" uuid="e6882331-f7a5-4787-864d-8695960f108a">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\dev 2nd year_2nd sem\CoderOut\Loan.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:E:\2ND YEAR - 2ND SEM\CoderOut\Loan.db</jdbc-url>
     </data-source>
   </component>
 </project>
