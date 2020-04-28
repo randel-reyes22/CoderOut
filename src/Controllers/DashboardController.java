@@ -16,6 +16,7 @@ import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
 import sample.WindowState.Close;
 import sample.WindowState.Open;
+import javafx.scene.chart.XYChart.Data;
 
 import javax.swing.*;
 import java.net.URL;
@@ -88,14 +89,9 @@ public class DashboardController implements Initializable {
                 }
             }
         }
-        RevenueChart.getData().addAll(seriesRevenue);
 
-        /*//add tooltip
-        for (XYChart.Data<String , Double> entry : seriesRevenue.getData()) {
-            System.out.println("Entered!");
-            Tooltip t = new Tooltip(entry.getYValue().toString());
-            Tooltip.install(entry.getNode(), t);
-        }*/
+        //after the loop add the data to the chart
+        RevenueChart.getData().addAll(seriesRevenue);
     }
 
     @FXML
