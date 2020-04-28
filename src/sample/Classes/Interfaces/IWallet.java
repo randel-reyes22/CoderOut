@@ -5,4 +5,5 @@ public interface IWallet {
     double TotalRevenueToday();
     //this week revenue
     double TotalRevenueThisWeek();
+
 }

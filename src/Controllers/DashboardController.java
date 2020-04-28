@@ -1,25 +1,33 @@
 package Controllers;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.ToggleButton;
-import sample.WindowState.Close;
-import sample.WindowState.Open;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
+import sample.Classes.Utility.WeekDates;
+import sample.WindowState.Close;
+import sample.WindowState.Open;
 
+import javax.swing.*;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
-    @FXML private AreaChart<?, ?> RevenueChart;
+    @FXML private AreaChart<String, Double> RevenueChart;
 
     @FXML private Label LoanOut;
 
@@ -36,13 +44,58 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //sets current user name in the label form
+        //sets current user name in tuhe label form
         CurrentUser.setText(LoanUtils.sess_firstname + " " + LoanUtils.sess_lastname);
         //default selected mode is today
         //Today.setSelected(true);
+        AreaWeekRevenueChart();
         /*get the revenue
                 default is today*/
         Revenue.setText(Format(Math.round(loan.TotalRevenueToday())));
+    }
+
+    private void AreaWeekRevenueChart(){
+        WeekDates weekDates = new WeekDates();
+        String revenueWeek = "SELECT  GivenDate ,sum(CollectionAmount) FROM main.Collections " +
+                "WHERE GivenDate  = ?";
+        //invoke method
+        weekDates.GetAllWeekDates();
+        //coordinates
+        XYChart.Series seriesRevenue= new XYChart.Series();
+
+        for(String dates: WeekDates.dates){
+            Connection conn = Connect.Link();
+            try {
+                PreparedStatement ps = conn.prepareStatement(revenueWeek);
+                ps.setString(1, dates);
+                ResultSet result = ps.executeQuery();
+                result.next();
+
+                seriesRevenue.setName("Revenue");
+
+                seriesRevenue.getData().add(new XYChart.Data(dates,result.getDouble(2)));
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                //if an exception occurs
+                JOptionPane.showMessageDialog(null, "An error occurred", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+        RevenueChart.getData().addAll(seriesRevenue);
+
+        /*//add tooltip
+        for (XYChart.Data<String , Double> entry : seriesRevenue.getData()) {
+            System.out.println("Entered!");
+            Tooltip t = new Tooltip(entry.getYValue().toString());
+            Tooltip.install(entry.getNode(), t);
+        }*/
     }
 
     @FXML

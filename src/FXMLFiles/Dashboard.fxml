@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="659.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DashboardController">
+<AnchorPane prefHeight="659.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DashboardController">
    <children>
       <Pane layoutX="137.0" layoutY="64.0" prefHeight="580.0" prefWidth="934.0">
          <children>
-            <AreaChart fx:id="RevenueChart" layoutX="37.0" layoutY="187.0" prefHeight="381.0" prefWidth="865.0">
+            <AreaChart fx:id="RevenueChart" layoutX="37.0" layoutY="146.0" prefHeight="422.0" prefWidth="865.0" title="Weekly Revenue">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -29,7 +29,7 @@
                </font>
             </Label>
             <Label layoutX="109.0" layoutY="63.0" text="Total revenue" />
-            <Label layoutX="562.0" layoutY="64.0" text="Total loan out" />
+            <Label layoutX="562.0" layoutY="64.0" text="Overdues" />
             <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="82.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/coins.png" />
@@ -45,11 +45,6 @@
                   <Font name="System Bold" size="50.0" />
                </font>
             </Label>
-            <Label fx:id="LoanOut" layoutX="574.0" layoutY="72.0" prefHeight="73.0" prefWidth="317.0" text="2000.00">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="48.0" fitWidth="54.0" layoutX="73.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/Peso.png" />
@@ -60,11 +55,6 @@
                   <Image url="@../icons/Peso.png" />
                </image>
             </ImageView>
-            <Label layoutX="78.0" layoutY="175.0" text="Statistics">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
             <ToggleButton fx:id="Toggle" layoutX="260.0" layoutY="59.0" mnemonicParsing="false" onAction="#ToggleMode" text="Today" />
          </children></Pane>
       <Label fx:id="CurrentUser" layoutX="859.0" layoutY="20.0" prefHeight="30.0" prefWidth="161.0" text="Username">

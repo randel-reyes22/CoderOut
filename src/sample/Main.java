@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.Classes.ConnectDB.Connect;
+import sample.Classes.Utility.WeekDates;
 
 public class Main extends Application {
 
@@ -19,7 +20,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Connect.Link();
         launch(args);
     }
 }
