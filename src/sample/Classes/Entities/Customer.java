@@ -2,6 +2,7 @@ package sample.Classes.Entities;
 
 public class Customer extends Name {
 
+    private int customer_id;
     private String mobile;
     private String address;
     private double balance;
@@ -15,6 +16,23 @@ public class Customer extends Name {
         super(firstname, lastname);
         this.mobile = mobile;
         this.address = address;
+    }
+
+    //with balance
+    public Customer(String firstname, String lastname, String mobile, String address,Double balance){
+        super(firstname, lastname);
+        this.mobile = mobile;
+        this.address = address;
+        this.balance = balance;
+    }
+
+    //with customer id
+    public Customer(int id ,String firstname, String lastname, String mobile, String address,Double balance){
+        super(firstname, lastname);
+        this.customer_id = id;
+        this.mobile = mobile;
+        this.address = address;
+        this.balance = balance;
     }
 
     public String getMobile() {
@@ -39,5 +57,13 @@ public class Customer extends Name {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public int getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(int customer_id) {
+        this.customer_id = customer_id;
     }
 }

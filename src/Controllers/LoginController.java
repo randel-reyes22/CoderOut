@@ -1,7 +1,7 @@
 package Controllers;
 
-import WindowState.Close;
-import WindowState.Open;
+import sample.WindowState.Close;
+import sample.WindowState.Open;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
