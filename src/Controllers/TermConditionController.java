@@ -1,5 +1,6 @@
 package Controllers;
 
+import sample.Classes.PayOut;
 import sample.WindowState.Close;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +29,7 @@ public class TermConditionController extends NewLoanController implements Initia
     //classes
     private final Loan loan = new Loan();
     private final double Total = totalAmount;
+    private final PayOut payOut = new PayOut();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,9 +48,18 @@ public class TermConditionController extends NewLoanController implements Initia
 
         if(!CheckEmptyFields() && !String.valueOf(DueDate.getValue()).isEmpty()) {
             //stat means if loan is successfully added
-            boolean stat = loan.AddLoan(Total ,tbModeOfPayment.getText(), tbTerm.getText(), String.valueOf(DueDate.getValue()));
+            boolean stat = loan.AddLoan(Total ,tbModeOfPayment.getText().toUpperCase(), tbTerm.getText(), String.valueOf(DueDate.getValue()));
             if (stat) {
                 LoanUtils.ObTableReceipt.clear(); //clear the table receipt
+
+                /*refresh ob customer list
+                * from the Customer controller*/
+                super.GetCustomerData();
+
+                /*after refreshing check remaining balance*/
+                payOut.CheckStatus();
+
+                //close window
                 Close.ThisWindow(event);
             }
         }
@@ -58,14 +69,18 @@ public class TermConditionController extends NewLoanController implements Initia
         LinkedList<TextField> textFields = new LinkedList<>();
         textFields.add(tbCustomerName);
         textFields.add(tbModeOfPayment);
-        textFields.add(tbTerm);
+        //textFields.add(tbTerm);
 
-        for(TextField t: textFields){
-            if(t.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Supply all fields");
+        if(tbTerm.getText().isEmpty())
+            tbTerm.setText( "" );
+
+        for (TextField t : textFields) {
+            if (t.getText().isEmpty()) {
+                JOptionPane.showMessageDialog( null, "Supply all fields" );
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -1,5 +1,6 @@
 package Controllers;
 
+import sample.Classes.PayOut;
 import sample.WindowState.Close;
 import sample.WindowState.Open;
 import javafx.collections.transformation.FilteredList;
@@ -140,7 +141,7 @@ public class CustomersController implements Initializable {
         }
     }
 
-    protected void searchCustomer() {
+    private void searchCustomer() {
 
         tbSearchCutomer.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredListCustomer.setPredicate(customer -> {

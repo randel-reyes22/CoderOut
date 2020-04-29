@@ -29,13 +29,7 @@
                </font>
             </Label>
             <Label layoutX="109.0" layoutY="63.0" text="Total revenue" />
-            <Label layoutX="562.0" layoutY="64.0" text="Overdues" />
             <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="82.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/coins.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="534.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/coins.png" />
                </image>
@@ -46,11 +40,6 @@
                </font>
             </Label>
             <ImageView fitHeight="48.0" fitWidth="54.0" layoutX="73.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/Peso.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="48.0" fitWidth="54.0" layoutX="526.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/Peso.png" />
                </image>

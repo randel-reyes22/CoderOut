@@ -56,4 +56,9 @@ public class LoanUtils {
     //detect if new loan to add product window is open
     public static String Loan_to_product_detect = "NOTACTIVE";
 
+    //set the status of the loan id as PAID
+    //if customer has 0 balance mark as PAID
+    public static final String PAID = "PAID";
+    public static final String UNPAID = "UNPAID";
+
 }

@@ -16,7 +16,7 @@ import sample.Classes.Utility.LoanUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RepaymentController implements Initializable {
+public class RepaymentController extends CustomersController implements Initializable {
 
     @FXML private TableView<Customer> RepaymentTable;
 
@@ -45,6 +45,8 @@ public class RepaymentController implements Initializable {
         InitPaymentColumns();
         //Load the customer data to the table
         GetCustomerPaymentData();
+        //Init search functionality
+        searchCustomer();
     }
 
     private void InitPaymentColumns(){
@@ -163,6 +165,33 @@ public class RepaymentController implements Initializable {
         };
 
         col_loaned_products.setCellFactory(cellFactory);
+    }
+
+    //for searching
+    private void searchCustomer() {
+
+        tbSearchCustomerPayment.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredListCustomer.setPredicate(customer -> {
+                if ((newValue == null || newValue.isEmpty())) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (customer.getFirstname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (customer.getLastname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(customer.getBalance()).contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false;
+            });
+        });
+
+        sortedListCustomer.comparatorProperty().bind(RepaymentTable.comparatorProperty());
+        RepaymentTable.setItems(sortedListCustomer);
     }
 
     @FXML

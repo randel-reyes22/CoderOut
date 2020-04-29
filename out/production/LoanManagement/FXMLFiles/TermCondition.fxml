@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="443.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.TermConditionController">
+<AnchorPane prefHeight="459.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.TermConditionController">
    <children>
-      <VBox alignment="CENTER" layoutX="88.0" layoutY="38.0" prefHeight="398.0" prefWidth="336.0" spacing="20.0">
+      <VBox alignment="CENTER_RIGHT" layoutX="88.0" layoutY="38.0" prefHeight="398.0" prefWidth="336.0" spacing="20.0">
          <children>
             <TextField fx:id="tbCustomerName" editable="false" prefHeight="45.0" prefWidth="316.0" promptText="Customer name">
                <VBox.margin>
@@ -24,12 +23,12 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="tbTerm" prefHeight="45.0" prefWidth="316.0" promptText="Term">
+            <TextField fx:id="tbTerm" prefHeight="45.0" prefWidth="316.0" promptText="Term, leave blank if not applicable">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </TextField>
-            <DatePicker fx:id="DueDate" prefHeight="45.0" prefWidth="316.0" promptText="Due date">
+            <DatePicker fx:id="DueDate" prefHeight="45.0" prefWidth="316.0" promptText="Due date, leave blank if not applicable">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

@@ -1,7 +1,5 @@
 package Controllers;
 
-import sample.WindowState.Close;
-import sample.WindowState.Open;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,15 +7,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import sample.Classes.ConnectDB.Connect;
+import sample.Classes.Hashing.Hash;
 import sample.Classes.Utility.LoanUtils;
+import sample.WindowState.Close;
+import sample.WindowState.Open;
 
 import javax.swing.*;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class LoginController implements Initializable {
 
@@ -29,7 +28,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        //PassHash();
     }
 
     @FXML
@@ -42,11 +41,13 @@ public class LoginController implements Initializable {
                 break;
 
             case "failed"://if login details is incorrect
-                JOptionPane.showMessageDialog(null, "Your username or password is incorrect.", "Incorrect", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Your username or password is incorrect.", "Incorrect", JOptionPane.INFORMATION_MESSAGE);
                 break;
 
             case "error"://if have an exception
-                JOptionPane.showMessageDialog(null, "Something went wrong.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Something went wrong.", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
         }
     }
@@ -61,7 +62,8 @@ public class LoginController implements Initializable {
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
-                if(tbUsername.getText().equals(rs.getString("username")) && tbPassword.getText().equals(rs.getString("password"))){
+                if(tbUsername.getText().equals(rs.getString("username")) &&
+                        tbPassword.getText().equals( Hash.Decode(rs.getString( "password" )))){
                     //set the session values
                     LoanUtils.sess_firstname = rs.getString("Firstname");
                     LoanUtils.sess_lastname = rs.getString("Lastname");
@@ -79,5 +81,28 @@ public class LoginController implements Initializable {
         }
     }
 
+    private void PassHash(){
+        String sql = "UPDATE Account SET Password = ? WHERE AccountId = ?";  //query string
+
+        try {
+            Connection conn = Connect.Link();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Password : " );
+            String pass = scanner.next();
+
+            ps.setString(1, Hash.Encode(pass));
+            ps.setInt(2, 4);
+            ps.executeUpdate();
+
+            System.out.println("Done");
+        }
+
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
 
 }

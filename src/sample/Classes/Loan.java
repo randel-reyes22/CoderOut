@@ -251,11 +251,13 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         LoanUtils.ObHistoryPayments.clear(); //clear the ob list
         Connection conn = Connect.Link();
         try{
-            String sql = "SELECT CollectionId, CollectionAmount, GivenDate " +
-                        "FROM main.Collections WHERE CustomerFk = ?";
+            String sql = "SELECT DISTINCT [C].CollectionId, [C].CollectionAmount, [C].GivenDate " +
+                    "FROM Collections AS C CROSS JOIN Loan AS L " +
+                    "WHERE [C].CustomerFk = ? AND [L].Status = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, getCustomer_PK());
+            ps.setString(2, PAID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
@@ -285,10 +287,11 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         try{
             String sql = "SELECT [p].ProdName, [p].ProdPrice, [l].Qty, [l].PaymentMode, [l].Duedate, [l].Term " +
             "FROM Product AS p INNER JOIN Loan L on p.ProductId = L.ProductFk " +
-            "WHERE CustomerFk = ?";
+            "WHERE CustomerFk = ? AND [l].Status = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, getCustomer_PK());
+            ps.setString(2, UNPAID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){

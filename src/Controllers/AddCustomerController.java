@@ -1,5 +1,6 @@
 package Controllers;
 
+import sample.Classes.PayOut;
 import sample.WindowState.Close;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

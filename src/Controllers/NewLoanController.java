@@ -281,12 +281,14 @@ public class NewLoanController extends CustomersController implements Initializa
     //and hit the next window Terms Win
     @FXML
     void btnNext(ActionEvent event) {
-        Open.TermCondition();
+        //if table receipt is not empty
+        if(!LoanUtils.ObTableReceipt.isEmpty())
+            Open.TermCondition();
     }
 
     @FXML
     void GoBack(MouseEvent event) {
-        Open.Dashboard();
+        Open.Customers();
         Close.ThisWindow(event);
     }
 }
