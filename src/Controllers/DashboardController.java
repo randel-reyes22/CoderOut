@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -41,7 +43,7 @@ public class DashboardController implements Initializable {
     @FXML private ToggleButton Toggle;
 
     //classes
-    private Loan loan = new Loan();
+    private final Loan loan = new Loan();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -147,10 +149,14 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
+    void AddAccount(MouseEvent event) {
+        Open.AddAccount();
+        Close.ThisWindow(event);
+    }
+
+    @FXML
     void Logout(MouseEvent event) {
         Open.Login();
         Close.ThisWindow(event);
     }
-
-
 }

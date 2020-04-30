@@ -1,6 +1,7 @@
 package sample.Classes;
 
 import sample.Classes.ConnectDB.Connect;
+import sample.Classes.Entities.Account;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
 import sample.Classes.Interfaces.IAccount;
@@ -24,7 +25,29 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
     //IAccount methods implementation
     @Override
     public void AddUserAccount() {
+        /* get the first most added customer in the linked list */
+        Account account = LLAccount.getFirst();
 
+        String insertCustomer = "INSERT INTO Account (Firstname, Lastname, Username, Password)" +
+                                "VALUES (?, ?, ?, ?)";
+        Connection conn = Connect.Link();
+        try{
+            PreparedStatement ps = conn.prepareStatement(insertCustomer);
+            ps.setString(1, account.getFirstname());
+            ps.setString(2, account.getLastname());
+            ps.setString(3, account.getUsername());
+            ps.setString(4, account.getPassword());
+            ps.executeUpdate();
+
+            //if customer is successfully added
+            JOptionPane.showMessageDialog(null, "Account has been added");
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            //if an exception occurs
+            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override

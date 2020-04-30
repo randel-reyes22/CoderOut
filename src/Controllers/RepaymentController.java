@@ -182,11 +182,7 @@ public class RepaymentController extends CustomersController implements Initiali
                     return true;
                 } else if (customer.getLastname().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (String.valueOf(customer.getBalance()).contains(lowerCaseFilter)) {
-                    return true;
-                }
-
-                return false;
+                } else return String.valueOf( customer.getBalance() ).contains( lowerCaseFilter );
             });
         });
 

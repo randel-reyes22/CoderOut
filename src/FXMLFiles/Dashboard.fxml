@@ -116,5 +116,10 @@
             <Image url="@../icons/loan.png" />
          </image>
       </ImageView>
+      <Label layoutX="720.0" layoutY="25.0" onMouseClicked="#AddAccount" text="Add Account">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

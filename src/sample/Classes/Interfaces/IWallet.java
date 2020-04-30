@@ -1,9 +1,10 @@
 package sample.Classes.Interfaces;
 
 public interface IWallet {
-    //today's revenue
+    //compute today's revenue
     double TotalRevenueToday();
-    //this week revenue
+
+    //compute this week revenue
     double TotalRevenueThisWeek();
 
 }

@@ -27,11 +27,9 @@ public class ReportsController implements Initializable {
     //Revenue summary tab
     @FXML private AreaChart<String, Double> RevenueSummary;
 
-    @FXML
-    private DatePicker StartDate;
+    @FXML private DatePicker StartDate;
 
-    @FXML
-    private DatePicker EndDate;
+    @FXML private DatePicker EndDate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

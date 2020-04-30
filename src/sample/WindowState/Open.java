@@ -39,6 +39,21 @@ public class Open {
         }
     }
 
+    //open add account window
+    public static void AddAccount(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../../FXMLFiles/AddAccount.fxml"));
+            Parent account = fxmlLoader.load();
+            Stage window = new Stage();
+            window.setScene(new Scene(account));
+            window.setResizable(false);
+            window.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 //  open customers window
     public static void Customers(){
         try {

@@ -28,7 +28,7 @@ public class PaymentHistoryController implements Initializable {
 
     @FXML private Label lbCaption;
     //classes
-    private Loan loan = new Loan();
+    private final Loan loan = new Loan();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
