@@ -1,10 +1,15 @@
 package sample.Classes.Utility;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 public class WeekDates {
@@ -53,7 +58,32 @@ public class WeekDates {
             //add to the linklist
             dates.add(dateformat.format(date.getTime()));
         }
+    }
 
+    //use for report window -> revenue tab
+    public void GetAllDays(String startDate, String endDate) throws ParseException {
+        dates.clear();
+        DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(startDate));
+
+        Calendar endCalendar = new GregorianCalendar();
+        endCalendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(endDate));
+
+        while (calendar.before(endCalendar)) {
+            Date result = calendar.getTime();
+            dates.add(dateformat.format(result));
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        Test();
+    }
+
+    public void Test(){
+        for(String d: dates){
+            System.out.println(d);
+        }
     }
 
     public static String DateNow(){

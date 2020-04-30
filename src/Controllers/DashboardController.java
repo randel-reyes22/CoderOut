@@ -57,8 +57,9 @@ public class DashboardController implements Initializable {
 
     private void AreaWeekRevenueChart(){
         WeekDates weekDates = new WeekDates();
-        String revenueWeek = "SELECT  GivenDate ,sum(CollectionAmount) FROM main.Collections " +
-                "WHERE GivenDate  = ?";
+        String revenueWeek = "SELECT  GivenDate ,sum(CollectionAmount) " +
+                                "FROM main.Collections " +
+                                "WHERE GivenDate  = ?";
         //invoke method
         weekDates.GetAllWeekDates();
         //coordinates
