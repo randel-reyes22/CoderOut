@@ -4,6 +4,7 @@ import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Entities.Account;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
+import sample.Classes.Hashing.Hash;
 import sample.Classes.Interfaces.IAccount;
 import sample.Classes.Interfaces.ILoan;
 import sample.Classes.Interfaces.IProduct;
@@ -14,13 +15,43 @@ import sample.Classes.TableClasses.TableReceipt;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
 
+import javax.net.ssl.SSLContext;
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWallet {
+
+    @Override
+    public String Login(String username, String password) {
+        final String Username = username;
+        final String Password = password;
+
+        String sql = "SELECT * FROM main.Account";  //query string
+
+        try {
+            Connection conn = Connect.Link();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                if(Username.equals(rs.getString("username")) &&
+                        Password.equals( Hash.Decode(rs.getString( "password" )))){
+                    //set the session values
+                    LoanUtils.sess_firstname = rs.getString("Firstname");
+                    LoanUtils.sess_lastname = rs.getString("Lastname");
+
+                    //if login is a success
+                    return "success";
+                }
+            }
+            return "failed";
+        }
+
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            return "error";
+        }
+    }
 
     //IAccount methods implementation
     @Override
