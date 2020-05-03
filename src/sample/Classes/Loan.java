@@ -15,7 +15,6 @@ import sample.Classes.TableClasses.TableReceipt;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
 
-import javax.net.ssl.SSLContext;
 import javax.swing.*;
 import java.sql.*;
 
@@ -305,13 +304,11 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         LoanUtils.ObHistoryPayments.clear(); //clear the ob list
         Connection conn = Connect.Link();
         try{
-            String sql = "SELECT DISTINCT [C].CollectionId, [C].CollectionAmount, [C].GivenDate " +
-                    "FROM Collections AS C CROSS JOIN Loan AS L " +
-                    "WHERE [C].CustomerFk = ? AND [L].Status = ?";
+            String sql = "SELECT CollectionId, CollectionAmount, GivenDate " +
+                    "FROM Collections WHERE CustomerFk = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, getCustomer_PK());
-            ps.setString(2, PAID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){

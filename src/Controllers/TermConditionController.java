@@ -49,6 +49,7 @@ public class TermConditionController extends NewLoanController implements Initia
         if(!CheckEmptyFields() && !String.valueOf(DueDate.getValue()).isEmpty()) {
             //stat means if loan is successfully added
             boolean stat = loan.AddLoan(Total ,tbModeOfPayment.getText().toUpperCase(), tbTerm.getText(), String.valueOf(DueDate.getValue()));
+
             if (stat) {
                 LoanUtils.ObTableReceipt.clear(); //clear the table receipt
 

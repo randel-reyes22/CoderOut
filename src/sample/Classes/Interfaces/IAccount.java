@@ -9,6 +9,8 @@ public interface IAccount {
 
     /*This will add an customer account*/
     void AddCustomerAccount();
+
     void UpdateCustomerAccount();
+
     void GetCustomers();
 }

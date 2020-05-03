@@ -6,5 +6,4 @@ public interface IWallet {
 
     //compute this week revenue
     double TotalRevenueThisWeek();
-
 }
