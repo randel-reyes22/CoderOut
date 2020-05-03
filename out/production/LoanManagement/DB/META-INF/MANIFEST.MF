@@ -18,7 +18,8 @@ Export-Package: org.sqlite;version="3.30.1.SNAPSHOT";uses:="javax.sql,
  .jdbc4",org.sqlite.jdbc4;version="3.30.1.SNAPSHOT";uses:="javax.sql,o
  rg.sqlite,org.sqlite.core,org.sqlite.jdbc3",org.sqlite.jdbc3;version=
  "3.30.1.SNAPSHOT";uses:="org.sqlite,org.sqlite.core"
-Import-Package: javax.sql;resolution:=optional
+Import-Package: javax.sql;resolution:=optional,
+ javax.swing
 Originally-Created-By: Apache Maven Bundle Plugin
 Tool: Bnd-2.1.0.20130426-122213
 
