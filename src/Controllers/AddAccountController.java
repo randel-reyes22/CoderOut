@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import sample.Classes.Entities.Account;
 import sample.Classes.Hashing.Hash;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.WindowState.Open;
@@ -47,9 +48,7 @@ public class AddAccountController implements Initializable {
             //invoke method to insert in the db
             loan.AddUserAccount();
         }else
-            JOptionPane.showMessageDialog(null,
-                    "Supply all fields", "Empty",
-                    JOptionPane.INFORMATION_MESSAGE);
+            MessageBox.ShowWarning("Supply all fields");
     }
 
     @FXML

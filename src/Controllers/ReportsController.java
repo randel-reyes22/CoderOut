@@ -6,9 +6,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import sample.Classes.ConnectDB.Connect;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Utility.WeekDates;
 import sample.WindowState.Close;
 import sample.WindowState.Open;
@@ -39,18 +39,16 @@ public class ReportsController implements Initializable {
 
     @FXML
     void View(ActionEvent event) throws ParseException {
-        if(!String.valueOf(EndDate.getValue()).isEmpty()
-            && !String.valueOf(StartDate.getValue()).isEmpty())
+        if(EndDate.getValue() != null && StartDate.getValue() != null)
             RevenueSummary();
     }
 
     private void RevenueSummary() throws ParseException {
-        WeekDates weekDates = new WeekDates();
         String revenueWeek = "SELECT GivenDate ,sum(CollectionAmount) FROM main.Collections " +
                 "WHERE GivenDate  = ?";
 
         //invoke method to gather all dates
-        weekDates.GetAllDays(String.valueOf(StartDate.getValue()),
+        WeekDates.GetAllDays(String.valueOf(StartDate.getValue()),
                 String.valueOf(EndDate.getValue()));
 
         //coordinates
@@ -70,8 +68,8 @@ public class ReportsController implements Initializable {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
                 //if an exception occurs
-                JOptionPane.showMessageDialog(null, "An error occurred", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                MessageBox.ShowError("An error occurred");
+
             } finally {
                 try {
                     conn.close();

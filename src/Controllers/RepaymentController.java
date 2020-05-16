@@ -41,6 +41,7 @@ public class RepaymentController extends CustomersController implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        LoanUtils.ChangeView = "RepaymentView";
         //init the columns
         InitPaymentColumns();
         //Load the customer data to the table

@@ -1,13 +1,16 @@
 package Controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Hashing.Hash;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.WindowState.Close;
@@ -36,22 +39,20 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void AuthLogin(MouseEvent event) {
+    void AuthLogin(ActionEvent event) {
         switch (loan.Login(tbUsername.getText(), tbPassword.getText()))
         {
             case "success": //if login is successful
                 Open.Dashboard();
-                Close.ThisWindow(event);
+                ((Node)(event.getSource())).getScene().getWindow().hide();
                 break;
 
             case "failed"://if login details is incorrect
-                JOptionPane.showMessageDialog(null,
-                        "Your username or password is incorrect.", "Incorrect", JOptionPane.INFORMATION_MESSAGE);
+                MessageBox.ShowInformation("Your username or password is incorrect.");
                 break;
 
             case "error"://if have an exception
-                JOptionPane.showMessageDialog(null,
-                        "Something went wrong.", "Error", JOptionPane.ERROR_MESSAGE);
+                MessageBox.ShowError("Something went wrong.");
                 break;
         }
     }

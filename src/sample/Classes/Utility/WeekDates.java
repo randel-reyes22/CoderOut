@@ -44,7 +44,7 @@ public class WeekDates {
         sunday = dateformat.format(date.getTime());
     }
 
-    public void GetAllWeekDates(){
+    public static void GetAllWeekDates(){
         Calendar date = Calendar.getInstance();
         //clear the values
         dates.clear();
@@ -61,7 +61,7 @@ public class WeekDates {
     }
 
     //use for report window -> revenue tab
-    public void GetAllDays(String startDate, String endDate) throws ParseException {
+    public static void GetAllDays(String startDate, String endDate) throws ParseException {
         dates.clear();
         DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -75,14 +75,6 @@ public class WeekDates {
             Date result = calendar.getTime();
             dates.add(dateformat.format(result));
             calendar.add(Calendar.DATE, 1);
-        }
-
-        Test();
-    }
-
-    public void Test(){
-        for(String d: dates){
-            System.out.println(d);
         }
     }
 

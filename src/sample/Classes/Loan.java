@@ -5,6 +5,7 @@ import sample.Classes.Entities.Account;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
 import sample.Classes.Hashing.Hash;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Interfaces.IAccount;
 import sample.Classes.Interfaces.ILoan;
 import sample.Classes.Interfaces.IProduct;
@@ -15,20 +16,19 @@ import sample.Classes.TableClasses.TableReceipt;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
 
-import javax.swing.*;
 import java.sql.*;
 
 public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWallet {
 
     @Override
     public String Login(String username, String password) {
+        Connection conn = Connect.Link();
         final String Username = username;
         final String Password = password;
 
         String sql = "SELECT * FROM main.Account";  //query string
 
         try {
-            Connection conn = Connect.Link();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -50,6 +50,13 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             System.out.println(ex.getMessage());
             return "error";
         }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
     //IAccount methods implementation
@@ -70,13 +77,19 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.executeUpdate();
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Account has been added");
+            MessageBox.ShowInformation("Account has been added");
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -97,13 +110,19 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.executeUpdate();
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Customer has been added");
+            MessageBox.ShowInformation("Customer has been added");
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                        JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -126,23 +145,42 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.executeUpdate();
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Customer has been updated");
+            MessageBox.ShowInformation("Customer has been updated");
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
     @Override
     public void GetCustomers() {
+        //changes the content of the table
+        //from all customers view and repayment window
+        String query = null;
+        switch (LoanUtils.ChangeView){
+            case "CustomerView":
+                query = "SELECT * FROM main.Customer";
+                break;
+            case "RepaymentView":
+                query = "SELECT * FROM main.Customer WHERE Balance > 0";
+                break;
+        }
+
         ObCustomer.clear(); //clear the ob list
         Connection conn = Connect.Link();
+
         try{
-            String sql = "SELECT * FROM main.Customer";
-            ResultSet rs = conn.createStatement().executeQuery(sql);
+
+            ResultSet rs = conn.createStatement().executeQuery(query);
 
             while (rs.next()){
                 ObCustomer.add(new Customer(rs.getInt("CustomerId"), rs.getString("Firstname"),
@@ -155,6 +193,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         }
         finally {
             try {
+                LoanUtils.ChangeView = "CustomerView";
                 conn.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -179,13 +218,12 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.executeUpdate();
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Product has been added");
+            MessageBox.ShowInformation("Product has been added");
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
         }
         finally {
             try {
@@ -214,13 +252,12 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.executeUpdate();
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Product has been updated");
+            MessageBox.ShowInformation("Product has been updated");
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
         }
         finally {
             try {
@@ -287,15 +324,21 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps2.executeUpdate();
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Loan has been saved");
+            MessageBox.ShowInformation("Loan has been saved");
             return true;
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
             return false;
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
@@ -319,8 +362,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         }
         catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
         }
         finally {
             try {
@@ -336,9 +378,9 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         LoanUtils.ObLoanedProducts.clear(); //clear the ob list
         Connection conn = Connect.Link();
         try{
-            String sql = "SELECT [p].ProdName, [p].ProdPrice, [l].Qty, [l].PaymentMode, [l].Duedate, [l].Term " +
-            "FROM Product AS p INNER JOIN Loan L on p.ProductId = L.ProductFk " +
-            "WHERE CustomerFk = ? AND [l].Status = ?";
+            String sql = "SELECT [p].ProdName, [p].ProdPrice, [L].Qty, [L].PaymentMode, [L].Duedate, [L].Term " +
+            "FROM Product AS p INNER JOIN Loan L on p.ProductId = [L].ProductFk " +
+            "WHERE CustomerFk = ? AND [L].Status = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, getCustomer_PK());
@@ -354,8 +396,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         }
         catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
         }
         finally {
             try {
@@ -383,8 +424,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
             return 0.00;
         }
         finally {
@@ -414,8 +454,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
             return 0.00;
         }
         finally {

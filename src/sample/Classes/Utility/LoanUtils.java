@@ -61,4 +61,6 @@ public class LoanUtils {
     public static final String PAID = "PAID";
     public static final String UNPAID = "UNPAID";
 
+    public static String ChangeView = "CustomerView";
+
 }

@@ -2,9 +2,9 @@ package sample.Classes;
 
 import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Entities.Customer;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Interfaces.IPay;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -39,14 +39,13 @@ public class PayOut extends Loan implements IPay {
             ps2.executeUpdate();
 
             //if customer is successfully added
-            JOptionPane.showMessageDialog(null, "Payment has been deducted \n " +
-                                "to the remaining balance");
+            MessageBox.ShowInformation("Payment has been deducted \n " +
+                    "to the remaining balance");
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "An error occurred",  "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("An error occurred");
         }
         finally {
             try {
@@ -79,8 +78,7 @@ public class PayOut extends Loan implements IPay {
                         ps.executeUpdate();
 
                         //if customer have 0 remaining balance
-                        JOptionPane.showMessageDialog( null,
-                                "Customer has 0 remaining balance" );
+                        MessageBox.ShowInformation("Customer has 0 remaining balance");
                     }else{ //if balance is > 0
                         ps.setString( 1, UNPAID );
                         ps.setInt( 2, getCustomer_PK() );
@@ -93,8 +91,7 @@ public class PayOut extends Loan implements IPay {
         catch (SQLException ex){
             System.out.println(ex.getMessage());
             //if an exception occurs
-            JOptionPane.showMessageDialog(null, "Cannot update status",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            MessageBox.ShowError("Cannot update status");
         }
         finally {
             try {

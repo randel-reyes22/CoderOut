@@ -1,5 +1,7 @@
 package Controllers;
 
+import javafx.scene.Node;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.PayOut;
 import sample.WindowState.Close;
 import javafx.fxml.FXML;
@@ -10,9 +12,11 @@ import javafx.scene.input.MouseEvent;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
+import sample.WindowState.Open;
 
 import javax.swing.*;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -30,6 +34,8 @@ public class TermConditionController extends NewLoanController implements Initia
     private final Loan loan = new Loan();
     private final double Total = totalAmount;
     private final PayOut payOut = new PayOut();
+    private String term;
+    private String due;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,22 +52,23 @@ public class TermConditionController extends NewLoanController implements Initia
     @FXML
     void btnSave(MouseEvent event) {
 
-        if(!CheckEmptyFields() && !String.valueOf(DueDate.getValue()).isEmpty()) {
+        if(!CheckEmptyFields()) {
             //stat means if loan is successfully added
-            boolean stat = loan.AddLoan(Total ,tbModeOfPayment.getText().toUpperCase(), tbTerm.getText(), String.valueOf(DueDate.getValue()));
+            boolean stat = loan.AddLoan(Total ,tbModeOfPayment.getText().toUpperCase(), term, due/*final string date*/);
 
             if (stat) {
                 LoanUtils.ObTableReceipt.clear(); //clear the table receipt
 
                 /*refresh ob customer list
                 * from the Customer controller*/
-                super.GetCustomerData();
+                loan.GetCustomers();
 
                 /*after refreshing check remaining balance*/
                 payOut.CheckStatus();
 
                 //close window
-                Close.ThisWindow(event);
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                Open.Customers();
             }
         }
     }
@@ -73,11 +80,18 @@ public class TermConditionController extends NewLoanController implements Initia
         //textFields.add(tbTerm);
 
         if(tbTerm.getText().isEmpty())
-            tbTerm.setText( "" );
+            term = "none";
+        else
+            term = tbTerm.getText();
+
+        if(DueDate.getValue() == null) {
+            due = "none";
+        }else
+            due = String.valueOf(DueDate.getValue());
 
         for (TextField t : textFields) {
             if (t.getText().isEmpty()) {
-                JOptionPane.showMessageDialog( null, "Supply all fields" );
+                MessageBox.ShowWarning("Supply all fields");
                 return true;
             }
         }

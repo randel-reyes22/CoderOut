@@ -1,5 +1,6 @@
 package Controllers;
 
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.PayOut;
 import sample.WindowState.Close;
 import javafx.fxml.FXML;
@@ -92,7 +93,7 @@ public class AddCustomerController extends CustomersController implements Initia
 
         for (TextField t : textFields){
             if(t.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Supply all fields");
+                MessageBox.ShowWarning("Supply all fields");
                 return true;
             }
         }

@@ -1,5 +1,6 @@
 package Controllers;
 
+import javafx.scene.Node;
 import sample.WindowState.Close;
 import sample.WindowState.Open;
 import javafx.collections.FXCollections;
@@ -282,8 +283,10 @@ public class NewLoanController extends CustomersController implements Initializa
     @FXML
     void btnNext(ActionEvent event) {
         //if table receipt is not empty
-        if(!LoanUtils.ObTableReceipt.isEmpty())
+        if(!LoanUtils.ObTableReceipt.isEmpty()) {
+            ((Node)(event.getSource())).getScene().getWindow().hide();
             Open.TermCondition();
+        }
     }
 
     @FXML

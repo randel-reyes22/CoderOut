@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import sample.Classes.Entities.Customer;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.PayOut;
@@ -63,24 +64,26 @@ public class MakePaymentController implements Initializable {
     void MakePay(ActionEvent event) {
         double amount = IsAmount();
 
-        if(!CheckAmount(amount)) { //if amount entered is <= to the remaining balance
-            if (amount > 0 && !String.valueOf(DateGiven.getValue()).isEmpty()) {
-                //invoke the make payment method
-                payOut.Makepayment(String.valueOf(DateGiven.getValue()), amount);
+        if(DateGiven.getValue() != null) {
+            if (!CheckAmount(amount)) { //if amount entered is <= to the remaining balance
+                if (amount > 0) {
+                    //invoke the make payment method
+                    payOut.Makepayment(String.valueOf(DateGiven.getValue()), amount);
 
-                //invoke ob to refresh the customer data
-                loan.GetCustomers();
+                    //invoke ob to refresh the customer data
+                    loan.GetCustomers();
 
-                //check status
-                payOut.CheckStatus();
+                    //check status
+                    payOut.CheckStatus();
 
-                //close this window
-                ((Node) (event.getSource())).getScene().getWindow().hide();
+                    //close this window
+                    ((Node) (event.getSource())).getScene().getWindow().hide();
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Please input a valid amount or date.");
+                MessageBox.ShowWarning("Amount entered is greater \n than the remaining balance.");
             }
-        }else
-            JOptionPane.showMessageDialog(null,
-                    "Amount entered is greater than the remaining balance.");
+        }else {
+            MessageBox.ShowInformation("Please input a valid amount or date.");
+        }
     }
 }

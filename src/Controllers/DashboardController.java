@@ -12,6 +12,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sample.Classes.ConnectDB.Connect;
+import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
@@ -58,12 +59,11 @@ public class DashboardController implements Initializable {
     }
 
     private void AreaWeekRevenueChart(){
-        WeekDates weekDates = new WeekDates();
         String revenueWeek = "SELECT  GivenDate ,sum(CollectionAmount) " +
                                 "FROM main.Collections " +
                                 "WHERE GivenDate  = ?";
         //invoke method
-        weekDates.GetAllWeekDates();
+        WeekDates.GetAllWeekDates();
         //coordinates
         XYChart.Series seriesRevenue= new XYChart.Series();
 
@@ -82,8 +82,7 @@ public class DashboardController implements Initializable {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
                 //if an exception occurs
-                JOptionPane.showMessageDialog(null, "An error occurred", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                MessageBox.ShowError("An error occurred");
             } finally {
                 try {
                     conn.close();
