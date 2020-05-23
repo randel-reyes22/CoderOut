@@ -1,13 +1,13 @@
 package sample.Classes;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Hashing.MessageBox;
 import sample.Classes.Interfaces.IPay;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
 
 public class PayOut extends Loan implements IPay {
 
@@ -60,33 +60,43 @@ public class PayOut extends Loan implements IPay {
     public void CheckStatus() {
 
         String updateStatus = "UPDATE main.Loan SET Status = ? " +
-                        "WHERE CustomerFk = ?";
+                                "WHERE LoanId = ?";
+
+        String loanId = "SELECT * FROM main.Loan WHERE CustomerFk = ? AND Status = ?";
 
         Connection conn;
         conn = Connect.Link();
 
         try{
-            //find the customer using the customer PK
-            for(Customer customer: ObCustomer) {
-                if(customer.getCustomer_id() == getCustomer_PK()) {
-                    //if balance is equals to 0 mark inactive
-                    PreparedStatement ps = conn.prepareStatement( updateStatus );
-                    if(customer.getBalance() == 0) {
-                        //query 1
-                        ps.setString( 1, PAID );
-                        ps.setInt( 2, getCustomer_PK() );
-                        ps.executeUpdate();
+            PreparedStatement ps1 = conn.prepareStatement(loanId);
+            ps1.setInt(1, getCustomer_PK());
+            ps1.setString(2, "UNPAID");
+            ResultSet rs = ps1.executeQuery();
 
-                        //if customer have 0 remaining balance
-                        MessageBox.ShowInformation("Customer has 0 remaining balance");
-                    }else{ //if balance is > 0
-                        ps.setString( 1, UNPAID );
-                        ps.setInt( 2, getCustomer_PK() );
-                        ps.executeUpdate();
+            LoanIds.clear();
+            while (rs.next()){ //add all loan id
+                LoanIds.add(rs.getInt("LoanId"));
+            }
+
+            //find the customer using the customer PK
+            for (Customer customer : ObCustomer) {
+                if (customer.getCustomer_id() == getCustomer_PK()) {
+                    //if balance is equals to 0 mark inactive
+                    PreparedStatement ps = conn.prepareStatement(updateStatus);
+                    for(Integer loan_id: LoanIds) {
+                        if (customer.getBalance() == 0.00 || customer.getBalance() == 0.0 || customer.getBalance() == 00.00) {
+                            //query 1
+                            ps.setString(1, PAID);
+                            ps.setInt(2, loan_id);
+                            ps.executeUpdate();
+
+                            //if customer have 0 remaining balance
+                            MessageBox.ShowInformation("Customer has 0 remaining balance");
+                        }
                     }
-                    break;
                 }
             }
+
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());

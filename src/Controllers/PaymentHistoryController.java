@@ -50,7 +50,7 @@ public class PaymentHistoryController implements Initializable {
 
     private void GetHistory(){
         //invoke loan get history method
-        loan.GetPaymentHistory();
+        loan.GetPaymentHistory("UNPAID");
         PaymentHistoryTable.setItems(Loan.ObHistoryPayments);
     }
 

@@ -9,6 +9,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,11 +19,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportsController">
+<AnchorPane prefHeight="768.0" prefWidth="1179.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportsController">
    <children>
-      <BorderPane layoutX="203.0" layoutY="14.0" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane layoutX="203.0" layoutY="14.0" prefHeight="759.0" prefWidth="1143.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane prefHeight="706.0" prefWidth="1137.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
                 <Tab text="Revenue Summary">
                   <content>
@@ -35,6 +38,9 @@
                                       <yAxis>
                                         <NumberAxis side="LEFT" />
                                       </yAxis>
+                                       <BorderPane.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </BorderPane.margin>
                                     </AreaChart>
                                  </center>
                                  <top>
@@ -61,11 +67,163 @@
                            </children></AnchorPane>
                   </content>
                 </Tab>
+                  <Tab text="Customer History">
+                      <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                  <BorderPane layoutX="220.0" layoutY="56.0" prefHeight="531.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <left>
+                                    <BorderPane prefHeight="571.0" prefWidth="394.0" BorderPane.alignment="CENTER">
+                                       <center>
+                                          <TableView fx:id="Table_Customer" prefHeight="571.0" prefWidth="284.0" BorderPane.alignment="CENTER">
+                                            <columns>
+                                              <TableColumn fx:id="col_id" prefWidth="51.0" text="ID" />
+                                              <TableColumn fx:id="col_fname" prefWidth="109.0" text="First name" />
+                                                <TableColumn fx:id="col_lname" prefWidth="138.0" text="Last name" />
+                                                <TableColumn fx:id="col_select" prefWidth="75.0" text="Select" />
+                                            </columns>
+                                             <BorderPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </BorderPane.margin>
+                                          </TableView>
+                                       </center>
+                                       <top>
+                                          <TextField fx:id="search_customer" alignment="CENTER" prefHeight="41.0" prefWidth="359.0" promptText="Search Customer" BorderPane.alignment="CENTER">
+                                             <BorderPane.margin>
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                             </BorderPane.margin></TextField>
+                                       </top>
+                                    </BorderPane>
+                                 </left>
+                                 <center>
+                                    <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <center>
+                                          <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                            <tabs>
+                                              <Tab text="Payment History">
+                                                <content>
+                                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                         <children>
+                                                            <BorderPane layoutX="193.0" layoutY="96.0" prefHeight="610.0" prefWidth="785.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <center>
+                                                                  <TableView fx:id="table_payment_history" prefHeight="540.0" prefWidth="765.0" BorderPane.alignment="CENTER">
+                                                                    <columns>
+                                                                      <TableColumn fx:id="col_loan_id" prefWidth="188.0" text="Loan ID" />
+                                                                      <TableColumn fx:id="col_amount" prefWidth="341.0" text="Given Amount" />
+                                                                        <TableColumn fx:id="col_given_date" prefWidth="235.0" text="Given Date" />
+                                                                    </columns>
+                                                                     <BorderPane.margin>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                     </BorderPane.margin>
+                                                                  </TableView>
+                                                               </center>
+                                                               <bottom>
+                                                                  <HBox alignment="CENTER" prefHeight="29.0" prefWidth="765.0" BorderPane.alignment="CENTER">
+                                                                     <BorderPane.margin>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                                     </BorderPane.margin>
+                                                                     <children>
+                                                                        <Label fx:id="lbTotal" text="Total : 00.00">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <HBox.margin>
+                                                                              <Insets right="500.0" />
+                                                                           </HBox.margin>
+                                                                        </Label>
+                                                                        <Label text="Print">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <HBox.margin>
+                                                                              <Insets right="10.0" />
+                                                                           </HBox.margin>
+                                                                        </Label>
+                                                                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#print_payment_history" pickOnBounds="true" preserveRatio="true">
+                                                                           <image>
+                                                                              <Image url="@../icons/print.png" />
+                                                                           </image>
+                                                                        </ImageView>
+                                                                     </children>
+                                                                  </HBox>
+                                                               </bottom>
+                                                            </BorderPane>
+                                                         </children></AnchorPane>
+                                                </content>
+                                              </Tab>
+                                              <Tab text="Product History">
+                                                <content>
+                                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                         <children>
+                                                            <BorderPane prefHeight="610.0" prefWidth="785.0">
+                                                               <bottom>
+                                                                  <HBox alignment="CENTER" prefHeight="29.0" prefWidth="765.0" BorderPane.alignment="CENTER">
+                                                                     <BorderPane.margin>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                                     </BorderPane.margin>
+                                                                     <children>
+                                                                        <Label text="Print">
+                                                                           <font>
+                                                                              <Font name="System Bold" size="18.0" />
+                                                                           </font>
+                                                                           <HBox.margin>
+                                                                              <Insets right="10.0" />
+                                                                           </HBox.margin>
+                                                                        </Label>
+                                                                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#print_product_history" pickOnBounds="true" preserveRatio="true">
+                                                                           <image>
+                                                                              <Image url="@../icons/print.png" />
+                                                                           </image>
+                                                                        </ImageView>
+                                                                     </children>
+                                                                  </HBox>
+                                                               </bottom>
+                                                               <center>
+                                                                   <TableView fx:id="LoanedProductsTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                                       <columns>
+                                                                           <TableColumn fx:id="col_prod_name" prefWidth="125.0" text="Product name" />
+                                                                           <TableColumn fx:id="col_price" prefWidth="125.0" text="Price" />
+                                                                           <TableColumn fx:id="col_qty" prefWidth="125.0" text="Quantity" />
+                                                                           <TableColumn fx:id="col_payment_mode" prefWidth="125.0" text="Paymend mode" />
+                                                                           <TableColumn fx:id="col_due_date" prefWidth="140.0" text="Due date" />
+                                                                           <TableColumn fx:id="col_term" prefWidth="124.0" text="Term" />
+                                                                       </columns>
+                                                                     <BorderPane.margin>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                     </BorderPane.margin>
+                                                                   </TableView>
+                                                               </center>
+                                                            </BorderPane>
+                                                         </children></AnchorPane>
+                                                </content>
+                                              </Tab>
+                                            </tabs>
+                                          </TabPane>
+                                       </center>
+                                       <top>
+                                          <Label fx:id="customer_name_selected" alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="33.0" prefWidth="210.0" text="Customer name here" BorderPane.alignment="CENTER">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <BorderPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </BorderPane.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </top>
+                                    </BorderPane>
+                                 </center>
+                                  </BorderPane>
+                              </children></AnchorPane>
+                      </content>
+                  </Tab>
               </tabs>
             </TabPane>
          </center>
          <top>
-            <HBox alignment="CENTER" prefHeight="41.0" prefWidth="1100.0" spacing="1000.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1135.0" spacing="1000.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>

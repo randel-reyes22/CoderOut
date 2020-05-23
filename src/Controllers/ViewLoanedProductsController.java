@@ -20,7 +20,7 @@ public class ViewLoanedProductsController implements Initializable {
 
     @FXML private TableView<LoanedProducts> LoanedProductsTable;
 
-    @FXML private TableColumn<LoanedProducts, Integer> col_id;
+    @FXML private TableColumn<LoanedProducts, String> col_id;
 
     @FXML private TableColumn<LoanedProducts, Double> col_price;
 
@@ -59,7 +59,7 @@ public class ViewLoanedProductsController implements Initializable {
     }
 
     private void GetLoanedProducts(){
-        loan.GetProductsLoaned();
+        loan.GetProductsLoaned("UNPAID");
         LoanedProductsTable.setItems(LoanUtils.ObLoanedProducts);
     }
 

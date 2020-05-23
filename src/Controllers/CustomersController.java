@@ -58,7 +58,7 @@ public class CustomersController implements Initializable {
         searchCustomer();
     }
 
-    protected void InitColumns(){
+    private void InitColumns(){
         col_id.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         col_firstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         col_lastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));

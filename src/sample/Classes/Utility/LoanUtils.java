@@ -24,6 +24,7 @@ public class LoanUtils {
     public static LinkedList<Account> LLAccount = new LinkedList<>();
     public static LinkedList<Customer> LLCustomer = new LinkedList<>();
     public static LinkedList<Product> LLProduct = new LinkedList<>();
+    public static LinkedList<Integer> LoanIds = new LinkedList<>();
 
     //for displaying the name of the user
     public static String sess_firstname;
@@ -55,11 +56,6 @@ public class LoanUtils {
 
     //detect if new loan to add product window is open
     public static String Loan_to_product_detect = "NOTACTIVE";
-
-    //set the status of the loan id as PAID
-    //if customer has 0 balance mark as PAID
-    public static final String PAID = "PAID";
-    public static final String UNPAID = "UNPAID";
 
     public static String ChangeView = "CustomerView";
 

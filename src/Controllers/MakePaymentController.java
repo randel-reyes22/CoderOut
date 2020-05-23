@@ -26,6 +26,9 @@ public class MakePaymentController implements Initializable {
 
     @FXML private DatePicker DateGiven;
 
+    @FXML private TextField tbBalance;
+
+
     //classes
     private final PayOut payOut = new PayOut();
     private final Loan loan = new Loan();
@@ -35,7 +38,8 @@ public class MakePaymentController implements Initializable {
         //display the name of the customer
         for(Customer c: LoanUtils.ObCustomer){
             if(c.getCustomer_id() == LoanUtils.getCustomer_PK()){
-                tbCustomerName.setText(c.getFirstname() + " " + c.getLastname());
+                tbCustomerName.setText(c.getFirstname() + " " + c.getLastname()); //name
+                tbBalance.setText(String.valueOf(c.getBalance())); //remaining balance
                 return;
             }
         }
@@ -71,6 +75,7 @@ public class MakePaymentController implements Initializable {
                     payOut.Makepayment(String.valueOf(DateGiven.getValue()), amount);
 
                     //invoke ob to refresh the customer data
+                    LoanUtils.ChangeView = "RepaymentView";
                     loan.GetCustomers();
 
                     //check status

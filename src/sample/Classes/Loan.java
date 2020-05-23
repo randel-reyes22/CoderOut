@@ -68,6 +68,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         String insertCustomer = "INSERT INTO Account (Firstname, Lastname, Username, Password)" +
                                 "VALUES (?, ?, ?, ?)";
         Connection conn = Connect.Link();
+
         try{
             PreparedStatement ps = conn.prepareStatement(insertCustomer);
             ps.setString(1, account.getFirstname());
@@ -299,11 +300,12 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
     public boolean AddLoan(double total, String modeOfPayment, String Term, String duedate) {
 
         String addLoan = "INSERT INTO main.Loan " +
-                        "(CustomerFk, ProductFk, PaymentMode, Duedate, Term, Qty)" +
-                        "VALUES (?, ?, ?, ?, ?, ?)";
+                        "(CustomerFk, ProductFk, PaymentMode, Duedate, Term, Qty, Status)" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         String addBalance = "UPDATE main.Customer SET Balance = Balance + ? WHERE CustomerId = ?;";
         Connection conn = Connect.Link();
+
         try{
             PreparedStatement ps = conn.prepareStatement(addLoan);
 
@@ -314,6 +316,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
                 ps.setString(4, duedate);
                 ps.setString(5, Term);
                 ps.setInt(6, tr.getQty());
+                ps.setString(7, UNPAID);
                 ps.executeUpdate();
             }
 
@@ -343,7 +346,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
     }
 
     @Override
-    public void GetPaymentHistory() {
+    public void GetPaymentHistory(String status) {
         LoanUtils.ObHistoryPayments.clear(); //clear the ob list
         Connection conn = Connect.Link();
         try{
@@ -374,7 +377,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
     }
 
     @Override
-    public void GetProductsLoaned() {
+    public void GetProductsLoaned(String status) {
         LoanUtils.ObLoanedProducts.clear(); //clear the ob list
         Connection conn = Connect.Link();
         try{
@@ -384,7 +387,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, getCustomer_PK());
-            ps.setString(2, UNPAID);
+            ps.setString(2, status);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){

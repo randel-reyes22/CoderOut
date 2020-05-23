@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="460.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MakePaymentController">
    <children>
-      <VBox alignment="CENTER" layoutX="49.0" layoutY="68.0" prefHeight="331.0" prefWidth="304.0" spacing="20.0">
+      <VBox alignment="CENTER" layoutX="47.0" layoutY="34.0" prefHeight="393.0" prefWidth="304.0" spacing="20.0">
          <children>
             <Label text="Make Payment">
                <font>
@@ -20,6 +19,11 @@
                </font>
             </Label>
             <TextField fx:id="tbCustomerName" alignment="CENTER" prefHeight="50.0" prefWidth="294.0" promptText="Customer name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tbBalance" alignment="CENTER" editable="false" prefHeight="50.0" prefWidth="294.0" promptText="Remaining Balance">
                <font>
                   <Font size="14.0" />
                </font>
