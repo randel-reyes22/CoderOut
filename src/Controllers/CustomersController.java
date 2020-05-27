@@ -38,8 +38,6 @@ public class CustomersController implements Initializable {
 
     @FXML private TableColumn<Customer, String> col_mobile;
 
-    @FXML private TableColumn<Customer, String> col_address;
-
     @FXML private TableColumn<Customer, Double> col_balance;
 
     @FXML private TableColumn<Customer, Void> col_update;
@@ -65,7 +63,6 @@ public class CustomersController implements Initializable {
         col_firstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         col_lastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         col_mobile.setCellValueFactory(new PropertyValueFactory<>("mobile"));
-        col_address.setCellValueFactory(new PropertyValueFactory<>("address"));
         col_balance.setCellValueFactory(new PropertyValueFactory<>("balance"));
     }
 
