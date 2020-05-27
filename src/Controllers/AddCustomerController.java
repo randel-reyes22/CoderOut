@@ -1,7 +1,7 @@
 package Controllers;
 
-import sample.Classes.Hashing.MessageBox;
-import sample.Classes.PayOut;
+import javafx.scene.image.ImageView;
+import sample.Classes.Tools.MessageBox;
 import sample.WindowState.Close;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +13,6 @@ import sample.Classes.Entities.Customer;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -32,6 +31,8 @@ public class AddCustomerController extends CustomersController implements Initia
 
     @FXML private Label lbTItle;
 
+    @FXML private ImageView img_qr_code;
+
     //
     private final LinkedList<TextField> textFields = new LinkedList<>();
     private final Loan loan = new Loan();
@@ -49,6 +50,7 @@ public class AddCustomerController extends CustomersController implements Initia
                     tbLastname.setText(c.getLastname());
                     tbMobile.setText(c.getMobile());
                     tbAddress.setText(c.getAddress());
+                    img_qr_code.setImage(c.getQrcode());
                     return;
                 }
             }
@@ -80,7 +82,6 @@ public class AddCustomerController extends CustomersController implements Initia
             //invoke parent method
             LoanUtils.ObCustomer.clear(); //clear the list of the OB
             super.GetCustomerData(); //then update the list and table
-            super.removeListCustomer(); //remove selection in filtered and sorted list
             Close.ThisWindow(event); //close this window after
         }
     }

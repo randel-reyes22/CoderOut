@@ -1,6 +1,6 @@
 package Controllers;
 
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.MessageBox;
 import sample.WindowState.Close;
 import sample.WindowState.Open;
 import javafx.collections.transformation.FilteredList;
@@ -16,7 +16,6 @@ import sample.Classes.Entities.Product;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;

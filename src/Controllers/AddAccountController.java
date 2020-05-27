@@ -8,13 +8,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import sample.Classes.Entities.Account;
-import sample.Classes.Hashing.Hash;
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.Hash;
+import sample.Classes.Tools.MessageBox;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.WindowState.Open;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;

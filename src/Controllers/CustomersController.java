@@ -1,5 +1,7 @@
 package Controllers;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import sample.Classes.PayOut;
 import sample.WindowState.Close;
 import sample.WindowState.Open;
@@ -68,10 +70,13 @@ public class CustomersController implements Initializable {
     }
 
     protected void GetCustomerData(){
-        //load the customers in the observable list
-        loan.GetCustomers();
-        CustomerTable.setItems(LoanUtils.ObCustomer);
-        ActionButton(); //button
+        try {
+            //load the customers in the observable list
+            loan.GetCustomers();
+            CustomerTable.setItems(LoanUtils.ObCustomer);
+            ActionButton(); //button
+        }
+        catch (NullPointerException ignored){}
     }
 
     private void ActionButton(){
@@ -132,13 +137,6 @@ public class CustomersController implements Initializable {
         };
 
         col_update.setCellFactory(cellFactory);
-    }
-
-    protected void removeListCustomer(){
-        int selectedItem = CustomerTable.getSelectionModel().getSelectedIndex();
-        if (selectedItem >= 0) {
-            CustomerTable.getItems().remove(selectedItem);
-        }
     }
 
     private void searchCustomer() {

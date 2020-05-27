@@ -7,20 +7,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import sample.Classes.ConnectDB.Connect;
-import sample.Classes.Hashing.Hash;
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.MessageBox;
 import sample.Classes.Loan;
-import sample.Classes.Utility.LoanUtils;
-import sample.WindowState.Close;
 import sample.WindowState.Open;
 
-import javax.swing.*;
 import java.net.URL;
-import java.sql.*;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class LoginController implements Initializable {
 

@@ -1,11 +1,12 @@
 package sample.Classes;
 
+import com.google.zxing.WriterException;
 import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Entities.Account;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Entities.Product;
-import sample.Classes.Hashing.Hash;
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.Hash;
+import sample.Classes.Tools.MessageBox;
 import sample.Classes.Interfaces.IAccount;
 import sample.Classes.Interfaces.ILoan;
 import sample.Classes.Interfaces.IProduct;
@@ -13,12 +14,16 @@ import sample.Classes.Interfaces.IWallet;
 import sample.Classes.TableClasses.HistoryPayment;
 import sample.Classes.TableClasses.LoanedProducts;
 import sample.Classes.TableClasses.TableReceipt;
+import sample.Classes.Tools.QrCodeGen;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWallet {
+
+    private QrCodeGen qrCodeGen = new QrCodeGen();
 
     @Override
     public String Login(String username, String password) {
@@ -99,8 +104,9 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
         /* get the first most added customer in the linked list */
         Customer customer = LLCustomer.getFirst();
 
-        String insertCustomer = "INSERT INTO main.Customer (Firstname, Lastname, MobileNumber, Address)" +
-                                "VALUES (?, ?, ?, ?)";
+        String insertCustomer = "INSERT INTO main.Customer (Firstname, Lastname, MobileNumber, Address, QrCode)" +
+                                "VALUES (?, ?, ?, ?, ?)";
+
         Connection conn = Connect.Link();
         try{
             PreparedStatement ps = conn.prepareStatement(insertCustomer);
@@ -108,6 +114,8 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.setString(2, customer.getLastname());
             ps.setString(3, customer.getMobile());
             ps.setString(4, customer.getAddress());
+            ps.setBytes(5, qrCodeGen.GenerateQRCode(qrCodeGen.Build(customer.getFirstname(), customer.getLastname(), customer.getMobile()
+                            , customer.getAddress(), customer.getBalance())));
             ps.executeUpdate();
 
             //if customer is successfully added
@@ -117,8 +125,11 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             System.out.println(ex.getMessage());
             //if an exception occurs
             MessageBox.ShowError("An error occurred");
-        }
-        finally {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        } finally {
             try {
                 conn.close();
             } catch (SQLException throwables) {
@@ -145,6 +156,8 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.setInt(5, LoanUtils.Customer_PK);
             ps.executeUpdate();
 
+            UpdateQrCode();
+
             //if customer is successfully added
             MessageBox.ShowInformation("Customer has been updated");
         }
@@ -152,8 +165,7 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             System.out.println(ex.getMessage());
             //if an exception occurs
             MessageBox.ShowError("An error occurred");
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException throwables) {
@@ -186,10 +198,10 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             while (rs.next()){
                 ObCustomer.add(new Customer(rs.getInt("CustomerId"), rs.getString("Firstname"),
                         rs.getString("Lastname"), rs.getString("MobileNumber"), rs.getString("Address")
-                        ,rs.getDouble("Balance")));
+                        ,rs.getDouble("Balance"), qrCodeGen.ConvertByteToImage(rs.getBytes("QrCode"))));
             }
         }
-        catch (SQLException ex) {
+        catch (SQLException | IOException ex) {
             System.out.println(ex.getMessage());
         }
         finally {
@@ -252,6 +264,8 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps.setInt(4, LoanUtils.getProduct_PK());
             ps.executeUpdate();
 
+            UpdateQrCode();//update qr for the latest balance
+
             //if customer is successfully added
             MessageBox.ShowInformation("Product has been updated");
         }
@@ -300,19 +314,20 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
     public boolean AddLoan(double total, String modeOfPayment, String Term, String duedate) {
 
         String addLoan = "INSERT INTO main.Loan " +
-                        "(CustomerFk, ProductFk, PaymentMode, Duedate, Term, Qty, Status)" +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "(CustomerFk, ProductFk, PaymentMode, Duedate, Term, Qty, Status)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        String addBalance = "UPDATE main.Customer SET Balance = Balance + ? WHERE CustomerId = ?;";
+        String addBalance = "UPDATE main.Customer SET Balance = Balance + ? WHERE CustomerId = ?";
+
         Connection conn = Connect.Link();
 
-        try{
+        try {
             PreparedStatement ps = conn.prepareStatement(addLoan);
 
-            for(TableReceipt tr: ObTableReceipt){
+            for (TableReceipt tr : ObTableReceipt) {
                 ps.setInt(1, LoanUtils.getCustomer_PK());
                 ps.setInt(2, tr.getId());
-                ps.setString(3,modeOfPayment);
+                ps.setString(3, modeOfPayment);
                 ps.setString(4, duedate);
                 ps.setString(5, Term);
                 ps.setInt(6, tr.getQty());
@@ -326,17 +341,15 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             ps2.setInt(2, getCustomer_PK());
             ps2.executeUpdate();
 
+            UpdateQrCode(); //will update the qr code with the latest qr code
+
             //if customer is successfully added
             MessageBox.ShowInformation("Loan has been saved");
             return true;
-        }
-        catch (SQLException ex){
-            System.out.println(ex.getMessage());
-            //if an exception occurs
-            MessageBox.ShowError("An error occurred");
+
+        } catch (SQLException ex) {
             return false;
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException throwables) {
@@ -402,6 +415,44 @@ public class Loan extends LoanUtils implements IAccount, IProduct, ILoan, IWalle
             MessageBox.ShowError("An error occurred");
         }
         finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void UpdateQrCode() {
+
+        GetCustomers();
+
+        String updateQrCode = "UPDATE main.Customer SET QrCode = ? WHERE CustomerId = ?";
+
+        Connection conn = Connect.Link();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(updateQrCode);
+
+            //update the qr code with the latest balance
+            for (Customer customer : ObCustomer) {
+                if (customer.getCustomer_id() == getCustomer_PK()) {
+                    ps.setBytes(1, qrCodeGen.GenerateQRCode(qrCodeGen.Build(customer.getFirstname(), customer.getLastname(), customer.getMobile()
+                            , customer.getAddress(), customer.getBalance())));
+                    ps.setInt(2, getCustomer_PK());
+                    break; //if found
+                }
+            }
+            ps.executeUpdate();
+
+            //if customer is successfully added
+            MessageBox.ShowInformation("Loan has been saved");
+
+        } catch (SQLException ex) {
+        } catch (IOException | WriterException e) {
+            e.printStackTrace();
+        } finally {
             try {
                 conn.close();
             } catch (SQLException throwables) {

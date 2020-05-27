@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.Classes.ConnectDB.Connect;
-import sample.Classes.Utility.WeekDates;
 
 public class Main extends Application {
 

@@ -16,4 +16,6 @@ public interface ILoan {
 
     /*THis will get the products loaned of a particular customer*/
     void GetProductsLoaned(String status);
+
+    void UpdateQrCode();
 }

@@ -1,12 +1,10 @@
 package sample.Classes;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import sample.Classes.ConnectDB.Connect;
 import sample.Classes.Entities.Customer;
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.MessageBox;
 import sample.Classes.Interfaces.IPay;
 
-import java.math.BigDecimal;
 import java.sql.*;
 
 public class PayOut extends Loan implements IPay {
@@ -37,6 +35,8 @@ public class PayOut extends Loan implements IPay {
             ps2.setDouble(1, amount);
             ps2.setInt(2, getCustomer_PK());
             ps2.executeUpdate();
+
+            UpdateQrCode(); //will update the latest remaining balance
 
             //if customer is successfully added
             MessageBox.ShowInformation("Payment has been deducted \n " +

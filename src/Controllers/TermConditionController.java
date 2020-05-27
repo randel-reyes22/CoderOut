@@ -1,9 +1,8 @@
 package Controllers;
 
 import javafx.scene.Node;
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.MessageBox;
 import sample.Classes.PayOut;
-import sample.WindowState.Close;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
@@ -14,9 +13,7 @@ import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.WindowState.Open;
 
-import javax.swing.*;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 

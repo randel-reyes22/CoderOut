@@ -29,7 +29,11 @@ Import-Package: javax.sql;resolution:=optional,
  javafx.scene,
  javafx.stage,
  javafx.beans.property,
- javafx.util
+ javafx.util,
+ javafx.application,
+ javax.imageio,
+ com.sun.org.apache.xerces.internal.impl.dv.util,
+ javafx.embed.swing
 Originally-Created-By: Apache Maven Bundle Plugin
 Tool: Bnd-2.1.0.20130426-122213
 

@@ -6,27 +6,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import sample.Classes.ConnectDB.Connect;
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.MessageBox;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.Utility.WeekDates;
 import sample.WindowState.Close;
 import sample.WindowState.Open;
-import javafx.scene.chart.XYChart.Data;
 
-import javax.swing.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {

@@ -1,8 +1,11 @@
 package sample.Classes.Entities;
 
+import javafx.scene.image.Image;
+
 public class Customer extends Name {
 
     private int customer_id;
+    private Image qrcode;
     private String mobile;
     private String address;
     private double balance;
@@ -27,12 +30,14 @@ public class Customer extends Name {
     }
 
     //with customer id
-    public Customer(int id ,String firstname, String lastname, String mobile, String address,Double balance){
+    public Customer(int id ,String firstname, String lastname, String mobile,
+                    String address,Double balance, Image qrcode){
         super(firstname, lastname);
         this.customer_id = id;
         this.mobile = mobile;
         this.address = address;
         this.balance = balance;
+        this.qrcode = qrcode;
     }
 
     public String getMobile() {
@@ -66,4 +71,13 @@ public class Customer extends Name {
     public void setCustomer_id(int customer_id) {
         this.customer_id = customer_id;
     }
+
+    public Image getQrcode() {
+        return qrcode;
+    }
+
+    public void setQrcode(Image qrcode) {
+        this.qrcode = qrcode;
+    }
+
 }

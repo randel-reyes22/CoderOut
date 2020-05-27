@@ -7,15 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import sample.Classes.Entities.Customer;
-import sample.Classes.Hashing.MessageBox;
+import sample.Classes.Tools.MessageBox;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
 import sample.Classes.PayOut;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class MakePaymentController implements Initializable {

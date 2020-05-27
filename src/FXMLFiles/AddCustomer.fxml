@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="452.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddCustomerController">
+<AnchorPane prefHeight="614.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddCustomerController">
    <children>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,8 +27,12 @@
             <Image url="@../icons/back.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="35.0" layoutY="97.0" prefHeight="312.0" prefWidth="428.0" spacing="20.0">
+      <VBox alignment="CENTER" layoutX="35.0" layoutY="82.0" prefHeight="500.0" prefWidth="428.0" spacing="20.0">
          <children>
+            <ImageView fx:id="img_qr_code" fitHeight="169.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/qrcode.png" />
+               </image></ImageView>
             <TextField fx:id="tbFirstname" prefHeight="39.0" prefWidth="379.0" promptText="First name" />
             <TextField fx:id="tbLastname" prefHeight="39.0" prefWidth="294.0" promptText="Last name" />
             <TextField fx:id="tbMobile" prefHeight="39.0" prefWidth="294.0" promptText="Mobile number" />
@@ -43,7 +47,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <Label layoutX="50.0" layoutY="71.0" text="Customer details">
+      <Label layoutX="43.0" layoutY="52.0" text="Customer details">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

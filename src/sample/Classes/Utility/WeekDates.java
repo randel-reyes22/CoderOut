@@ -54,9 +54,10 @@ public class WeekDates {
         DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
         for (int i = 0; i < 7; i++) {
-            date.add(Calendar.DATE, 1);
             //add to the linklist
             dates.add(dateformat.format(date.getTime()));
+            
+            date.add(Calendar.DATE, 1);
         }
     }
 
