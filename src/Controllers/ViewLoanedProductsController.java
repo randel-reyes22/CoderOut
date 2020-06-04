@@ -43,7 +43,7 @@ public class ViewLoanedProductsController implements Initializable {
         GetLoanedProducts();
         for(Customer c: LoanUtils.ObCustomer){
             if(c.getCustomer_id() == LoanUtils.getCustomer_PK()){
-                lbCaption.setText("Loaned Products of " + c.getFirstname() + " " + c.getLastname());
+                lbCaption.setText("Loaned Products of " + c.toString());
                 return;
             }
         }

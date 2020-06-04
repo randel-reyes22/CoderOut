@@ -9,6 +9,11 @@ public class Name {
         //empty constructor
     }
 
+    @Override
+    public String toString() {
+        return this.firstname + " " + this.lastname;
+    }
+
     //for updating and adding
     public Name(String firstname, String lastname) {
         this.firstname = firstname;

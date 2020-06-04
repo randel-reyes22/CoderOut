@@ -36,7 +36,7 @@ public class PaymentHistoryController implements Initializable {
         GetHistory();
         for(Customer c: LoanUtils.ObCustomer){
             if(c.getCustomer_id() == LoanUtils.getCustomer_PK()){
-                lbCaption.setText("Payment History of " + c.getFirstname() + " " + c.getLastname());
+                lbCaption.setText("Payment History of " + c.toString());
                 return;
             }
         }

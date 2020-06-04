@@ -200,7 +200,7 @@ public class ReportsController implements Initializable {
                         //get the customer id for further execution
                         LoanUtils.setCustomer_PK(customer.getCustomer_id());
 
-                        customer_name_selected.setText(customer.getFirstname() + " " + customer.getLastname());//display the name
+                        customer_name_selected.setText(customer.toString());//display the name
                         //payment history
                         loan.GetPaymentHistory("PAID"); //get the history
                         table_payment_history.setItems(Loan.ObHistoryPayments); //display the payment history

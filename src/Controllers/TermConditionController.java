@@ -40,7 +40,7 @@ public class TermConditionController extends NewLoanController implements Initia
         //display the name of the customer
         for(Customer customer: LoanUtils.ObCustomer){
             if(customer.getCustomer_id() == LoanUtils.getCustomer_PK()){
-                tbCustomerName.setText(customer.getFirstname() + " " + customer.getLastname());
+                tbCustomerName.setText(customer.toString());
                 return;
             }
         }

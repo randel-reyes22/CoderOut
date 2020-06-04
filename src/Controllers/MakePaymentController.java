@@ -36,7 +36,7 @@ public class MakePaymentController implements Initializable {
         //display the name of the customer
         for(Customer c: LoanUtils.ObCustomer){
             if(c.getCustomer_id() == LoanUtils.getCustomer_PK()){
-                tbCustomerName.setText(c.getFirstname() + " " + c.getLastname()); //name
+                tbCustomerName.setText(c.toString()); //name
                 tbBalance.setText(String.valueOf(c.getBalance())); //remaining balance
                 return;
             }

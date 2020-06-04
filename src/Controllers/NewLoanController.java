@@ -84,7 +84,7 @@ public class NewLoanController extends CustomersController implements Initializa
         //display the customer name
         for(Customer customer: LoanUtils.ObCustomer){
             if(customer.getCustomer_id() == LoanUtils.getCustomer_PK()){
-                lbCustomerName.setText(customer.getFirstname() + " " + customer.getLastname());
+                lbCustomerName.setText(customer.toString());
                 return;
             }
         }
