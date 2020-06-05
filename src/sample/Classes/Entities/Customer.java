@@ -5,10 +5,10 @@ import javafx.scene.image.Image;
 public class Customer extends Name {
 
     private int customer_id;
-    private Image qrcode;
     private String mobile;
     private String address;
     private double balance;
+    private Image qrcode;
 
     public Customer(){
         //empty constructor
@@ -79,5 +79,7 @@ public class Customer extends Name {
     public void setQrcode(Image qrcode) {
         this.qrcode = qrcode;
     }
+
+
 
 }

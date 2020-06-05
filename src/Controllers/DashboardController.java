@@ -143,6 +143,12 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
+    void OpenDealers(MouseEvent event) {
+        Open.Dealers();
+        Close.ThisWindow(event);
+    }
+
+    @FXML
     void AddAccount(MouseEvent event) {
         Open.AddAccount();
         Close.ThisWindow(event);

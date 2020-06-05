@@ -69,10 +69,40 @@ public class Open {
         }
     }
 
+    //  open customers window
+    public static void Dealers(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../../FXMLFiles/Dealers.fxml"));
+            Parent customer = fxmlLoader.load();
+            Stage window = new Stage();
+            window.setScene(new Scene(customer));
+            window.setResizable(false);
+            window.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 //  open add customer window
     public static void AddCustomer(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../../FXMLFiles/AddCustomer.fxml"));
+            Parent addCustomer = fxmlLoader.load();
+            Stage window = new Stage();
+            window.setScene(new Scene(addCustomer));
+            window.setResizable(false);
+            window.show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //  open add customer window
+    public static void AddDealer(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Open.class.getResource("../../FXMLFiles/AddDealer.fxml"));
             Parent addCustomer = fxmlLoader.load();
             Stage window = new Stage();
             window.setScene(new Scene(addCustomer));

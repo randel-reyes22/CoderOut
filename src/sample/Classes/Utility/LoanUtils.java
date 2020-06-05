@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Classes.Entities.Account;
 import sample.Classes.Entities.Customer;
+import sample.Classes.Entities.Dealer;
 import sample.Classes.Entities.Product;
 import sample.Classes.TableClasses.HistoryPayment;
 import sample.Classes.TableClasses.LoanedProducts;
@@ -17,12 +18,14 @@ public class LoanUtils {
     public static ObservableList<TableReceipt> ObTableReceipt = FXCollections.observableArrayList();
     public static ObservableList<Product> ObProduct = FXCollections.observableArrayList();
     public static ObservableList<Customer> ObCustomer = FXCollections.observableArrayList();
+    public static ObservableList<Dealer> ObDealer = FXCollections.observableArrayList();
     public static ObservableList<HistoryPayment> ObHistoryPayments = FXCollections.observableArrayList();
     public static ObservableList<LoanedProducts> ObLoanedProducts = FXCollections.observableArrayList();
 
     //linked list for updating and adding
     public static LinkedList<Account> LLAccount = new LinkedList<>();
     public static LinkedList<Customer> LLCustomer = new LinkedList<>();
+    public static LinkedList<Dealer> LLDealer = new LinkedList<>();
     public static LinkedList<Product> LLProduct = new LinkedList<>();
     public static LinkedList<Integer> LoanIds = new LinkedList<>();
 
@@ -33,6 +36,7 @@ public class LoanUtils {
     //primary keys
     protected static int Customer_PK;
     protected static int Product_PK;
+    protected static int Dealer_PK;
 
     public static int getCustomer_PK() {
         return Customer_PK;
@@ -49,6 +53,10 @@ public class LoanUtils {
     public static void setProduct_PK(int product_PK) {
         Product_PK = product_PK;
     }
+
+    public static int getDealer_PK() { return Dealer_PK; }
+
+    public static void setDealer_PK(int dealer_PK) { Dealer_PK = dealer_PK; }
 
     /*this is for classifying if customer
     will be selected or to be updated*/

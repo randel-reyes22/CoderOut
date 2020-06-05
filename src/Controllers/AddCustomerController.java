@@ -1,6 +1,9 @@
 package Controllers;
 
+import javafx.scene.control.DatePicker;
 import javafx.scene.image.ImageView;
+import sample.Classes.Dealers_loan;
+import sample.Classes.Entities.Dealer;
 import sample.Classes.Tools.MessageBox;
 import sample.WindowState.Close;
 import javafx.fxml.FXML;
@@ -12,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import sample.Classes.Entities.Customer;
 import sample.Classes.Loan;
 import sample.Classes.Utility.LoanUtils;
+import sample.WindowState.Open;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -33,44 +37,51 @@ public class AddCustomerController extends CustomersController implements Initia
 
     @FXML private ImageView img_qr_code;
 
+
     //
     private final LinkedList<TextField> textFields = new LinkedList<>();
     private final Loan loan = new Loan();
+    private final Dealers_loan dealers_loan = new Dealers_loan();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        if(LoanUtils.Action_classifier.equals("Update")){
-            lbTItle.setText("Update Customer");
-            btnSave.setText("Update");
+        switch (LoanUtils.Action_classifier){
+            case "Update": //for updating the customer
+                lbTItle.setText("Update Customer");
+                btnSave.setText("Update");
 
-            for(Customer c: LoanUtils.ObCustomer){
-                if(c.getCustomer_id() == LoanUtils.getCustomer_PK()){
-                    tbFirstname.setText(c.getFirstname());
-                    tbLastname.setText(c.getLastname());
-                    tbMobile.setText(c.getMobile());
-                    tbAddress.setText(c.getAddress());
-                    img_qr_code.setImage(c.getQrcode());
-                    return;
+                for(Customer c: LoanUtils.ObCustomer){
+                    if(c.getCustomer_id() == LoanUtils.getCustomer_PK()){
+                        tbFirstname.setText(c.getFirstname());
+                        tbLastname.setText(c.getLastname());
+                        tbMobile.setText(c.getMobile());
+                        tbAddress.setText(c.getAddress());
+                        img_qr_code.setImage(c.getQrcode());
+                        return;
+                    }
                 }
-            }
+                break;
         }
+
+
     }
 
     //save the new customer
     @FXML
     void SaveCustomer(MouseEvent event) {
         if(!CheckEmptyFields()){
+
             LoanUtils.LLCustomer.addFirst(new Customer(tbFirstname.getText(), tbLastname.getText(),
-                    tbMobile.getText(), tbAddress.getText()));
+                                                       tbMobile.getText(), tbAddress.getText()));
 
             //invoke method from loan class
             switch (LoanUtils.Action_classifier)
             {
-                case "Update":
+                case "Update": //for the regular customers
                     loan.UpdateCustomerAccount();
                     break;
-                case "Add":
+                case "Add": //for the regular customers
                     loan.AddCustomerAccount();
                     //change back to update after add
                     LoanUtils.Action_classifier = "Update";

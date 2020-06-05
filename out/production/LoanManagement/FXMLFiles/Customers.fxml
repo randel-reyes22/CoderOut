@@ -22,7 +22,7 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1052.0" layoutY="14.0" onMouseClicked="#GoBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1036.0" layoutY="14.0" onMouseClicked="#GoBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/back.png" />
          </image>
