@@ -26,8 +26,7 @@ public class AddAccountController implements Initializable {
 
     @FXML private TextField tbUsername;
 
-    @FXML
-    private PasswordField tbPassword;
+    @FXML private PasswordField tbPassword;
 
     private final Loan loan = new Loan();
 
