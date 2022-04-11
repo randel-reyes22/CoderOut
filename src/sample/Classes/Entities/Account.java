@@ -38,4 +38,5 @@ public class Account extends Name {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

@@ -5,13 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.Classes.ConnectDB.Connect;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../FXMLFiles/Login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 740,450 ));
         primaryStage.show();
@@ -19,7 +18,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Connect.Link();
         launch(args);
     }
 }
